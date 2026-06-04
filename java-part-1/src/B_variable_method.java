@@ -39,9 +39,16 @@
 // * 상수(Constant) : 변수와 마찬가지로 '값을 저장할 수 있는 공간'이지만, 변수와 달리 한번 값을 저장하면 다른 값으로 변경할 수 없다.
 // 변수 타입 앞에 'final'을 붙여주면 된다.
 
-public class B_variable_method {
-    static void main(String[] args) {
+import org.w3c.dom.ls.LSOutput;
 
+public class B_variable_method {
+    /*
+    // 함수 : 프로그래밍에서 특정 작업을 수행하기 위해 작성된 코드의 묶음
+        1. 함수 선언 : 함수의 이름과 특성을 정의하는 부분
+        2. 매개 변수(파라미터) : 매개변수는 함수가 작업을 수행하는 데 필요한 입력값을 전달받는 부분이다.
+        3. 반환 타입 : 함수가 어떤 유형의 값을 반환할지를 정의
+     */
+    public static void _print1(){
         byte myByte = 127;
         System.out.println("myByte : " + myByte);
 
@@ -80,6 +87,20 @@ public class B_variable_method {
         // 문자열 -> 참조형
         String str = "Hello World";
         System.out.println("str : " + str);
+    }
+
+    static int add(int a, int b){ return a+b;}
+    static int min(int a, int b){ return a-b;}
+    static void res(int a, int b){
+        System.out.println(add(a,b));
+        System.out.println(min(a,b));
+    }
+
+
+    public static void main(String[] args) {
+
+        _print1();
+        res(4,5);
 
     }
 }
