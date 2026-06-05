@@ -1,3 +1,5 @@
+package report_02_가계부;
+
 import java.util.*;
 
 import static java.lang.System.exit;
@@ -18,7 +20,7 @@ import static java.lang.System.exit;
 
 /*
 날짜를 입력받는다.
-그 날짜에 쓸 빈 List<Item>을 만든다.
+그 날짜에 쓸 빈 List<report_02_가계부.Item>을 만든다.
 반복하면서 항목 이름·금액을 입력받아 Item을 만들고 List에 add한다.
 "더 추가?"가 n이면 반복 종료.
 data.put(날짜, 리스트)로 저장한다.
@@ -27,7 +29,7 @@ data.put(날짜, 리스트)로 저장한다.
  */
 
 // Map(날짜, list(이름,가격))
-// AccountBook 을 구현한다. 실제 로직과 데이터 (Map)을 가진다.
+// report_02_가계부.AccountBook 을 구현한다. 실제 로직과 데이터 (Map)을 가진다.
 public class AccountBookImpl implements AccountBook {
     private Map<String, List<Item>> data = new HashMap<>();
     private Scanner sc = new Scanner(System.in);

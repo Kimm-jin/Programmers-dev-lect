@@ -1,3 +1,5 @@
+package report_02_가계부;
+
 // 항목 1개를 표현하는 클래스(이름, 금액)
 public class Item {
     private String name;

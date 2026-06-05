@@ -1,4 +1,4 @@
-/*
+package report_02_가계부;/*
 Collection 활용
 
 1	내역 추가	날짜를 입력하고, 그 날짜에 항목(이름 + 금액)을 여러 개 등록한다. 등록이 끝나면 합계를 보여준다.
@@ -7,21 +7,19 @@ Collection 활용
 4	내역 삭제	날짜를 입력받아 항목들을 보여주고, 그중 특정 항목 하나만 삭제한다.
 5	종료	프로그램을 끝낸다.
 
-Map<String, List<Item>>
+Map<String, List<report_02_가계부.Item>>
       │           │
    날짜 문자열   그 날의 항목들(List)
  */
 
 import java.util.Scanner;
 import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import static java.lang.System.exit;
 
 
-public class report_02_가계부 {
+public class start {
     public static void main(String[] args) {
         /*
             Scanner로 번호를 입력받는다.
