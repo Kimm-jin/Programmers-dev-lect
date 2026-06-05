@@ -3,7 +3,7 @@
 import java.util.Scanner;
 import static java.lang.System.exit;
 
-public class report_01 {
+public class report_01_자판기 {
     static final int COKE = 500, CIDER = 700, FANTA = 300, WATER = 200;
     static int Total = 0;
     public static void printMenu(int totalMoney) {
