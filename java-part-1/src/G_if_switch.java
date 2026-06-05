@@ -67,6 +67,37 @@ public class G_if_switch {
             default: System.out.println("F학점 입니다.");
         }
     }
+
+    public static void exam6() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1~12월 중 하나를 입력하세요.");
+        int month = sc.nextInt();
+
+        switch (month) {
+            case 1:
+            case 2:
+            case 3:
+                System.out.println("1분기입니다.");
+                break;
+            case 4:
+            case 5:
+            case 6:
+                System.out.println("2분기입니다.");
+                break;
+            case 7:
+            case 8:
+            case 9:
+                System.out.println("3분기입니다.");
+                break;
+            case 10:
+            case 11:
+            case 12:
+                System.out.println("4분기입니다.");
+                break;
+        }
+
+    }
+
     public static void main(String[] args) {
         //exam3();
         practice1();
