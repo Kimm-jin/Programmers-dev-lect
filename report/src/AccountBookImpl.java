@@ -46,11 +46,17 @@ public class AccountBookImpl implements AccountBook {
         while (true) {
             System.out.printf("항목 이름 > ");
             String name = sc.nextLine();
+            try {
+                System.out.printf("금액 > ");
+                String s = sc.nextLine();
+                int price = Integer.parseInt(s);
 
-            System.out.printf("금액 > ");
-            int price = Integer.parseInt(sc.nextLine());
+                listItem.add(new Item(name, price)); // List(name, price),
+            }catch (NumberFormatException e){
+                System.out.println("숫자가 아닙니다");
+                return;
+            }
 
-            listItem.add(new Item(name, price)); // List(name, price),
 
 
             System.out.println("더 추가할까요? (y/n) >");
@@ -136,11 +142,16 @@ public class AccountBookImpl implements AccountBook {
         String date = sc.nextLine();
         List<Item> itemList = data.get(date);
         int i=1;
+        if(itemList==null){
+            System.out.println("저장된 날짜가 아닙니다.");
+            return;
+        }
         for (Item item : itemList) {
             System.out.println(i++ + ". "+item.getName() + " : " + item.getPrice());
         }
         System.out.printf("삭제할 번호를 입력하세요 : ");
-        int  index = Integer.parseInt(sc.nextLine());
+        String s = sc.nextLine();
+        int index = Integer.parseInt(s);
         if(index>itemList.size() || index<1){
             System.out.println("잘못 입력하셨습니다.");
             return;
