@@ -48,7 +48,27 @@ public class G_if_switch {
         // 여기
     }
 
+    // A학점 90점 이상, B학점 80점 이상, C학점 70점 이상, 그 외 F학점
+    // switch case
+    static void practice1(){
+        System.out.println("점수를 입력해주세요.");
+        Scanner sc = new Scanner(System.in);
+        int score = sc.nextInt(); // 사용자 값을 입력받아주세요.
+        char grade = 'F';
+        if(score>=90) grade='A';
+        else if(score>=80) grade='B';
+        else if(score>=70) grade='C';
+
+        score/=10;
+        switch (grade){
+            case 'A' : {System.out.println("A학점 입니다."); break;}
+            case 'B': {System.out.println("B학점 입니다."); break;}
+            case 'C': {System.out.println("C학점 입니다."); break;}
+            default: System.out.println("F학점 입니다.");
+        }
+    }
     public static void main(String[] args) {
-        exam3();
+        //exam3();
+        practice1();
     }
 }
