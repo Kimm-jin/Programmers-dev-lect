@@ -94,10 +94,13 @@ public class AccountBookImpl implements AccountBook {
         }
         System.out.printf("날짜 입력 (예 : 2024-09-04) > ");
         String date = sc.nextLine();
-        List<Item> itemList = data.get(date);
 
-        //
+        // List<Item> itemList = data.get(date); // Potential Bug
+        // 없는 날짜라면 null이 담김 현재는 containskey때문에 에러가 없지만 잠재적 버그코드임
+
+
         if (data.containsKey(date)) {
+            List<Item> itemList = data.get(date); // 위치 이동
             int sum = 0;
             for (Item item : itemList) {
                 System.out.println(item.getName() + " : " + item.getPrice());
