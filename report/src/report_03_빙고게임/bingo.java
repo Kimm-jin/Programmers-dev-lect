@@ -74,7 +74,11 @@ public class bingo {
         System.out.println("====== 내 빙고판 ======");
         for (int i = 0; i < myBingo.length; i++) {
             for (int j = 0; j < myBingo[i].length; j++) {
-                System.out.printf("[%2d] ", myBingo[i][j]);
+                if(myBingo[i][j]==0){
+                    System.out.printf("[ ★] ");
+                }else{
+                    System.out.printf("[%2d] ", myBingo[i][j]);
+                }
             }
             System.out.printf("\n");
         }
@@ -221,15 +225,23 @@ public class bingo {
         System.out.println("========My bingo========");
         for (int i = 0; i < myBingo.length; i++) {
             for (int j = 0; j < myBingo[i].length; j++) {
-                System.out.printf("[%2d] ",myBingo[i][j]);
+                if(myBingo[i][j]==0){
+                    System.out.printf("[ ★] ");
+                }else{
+                    System.out.printf("[%2d] ", myBingo[i][j]);
+                }
             }
             System.out.println("");
         }
         System.out.println("");
-        System.out.println("========com bingo========");
+        System.out.println("========Com bingo========");
         for (int i = 0; i < comBingo.length; i++) {
             for (int j = 0; j < comBingo[i].length; j++) {
-                System.out.printf("[%2d] ",comBingo[i][j]);
+                if(comBingo[i][j]==0){
+                    System.out.printf("[ ★] ");
+                }else{
+                    System.out.printf("[%2d] ", comBingo[i][j]);
+                }
             }
             System.out.println("");
         }
