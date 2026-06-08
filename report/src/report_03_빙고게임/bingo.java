@@ -7,11 +7,9 @@ package report_03_빙고게임;
 - 먼저 목표 줄 수(기본 3줄)를 완성하는 쪽이 **승리**.
  */
 
-import java.util.Scanner;
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
+
+import static java.lang.System.exit;
 
 
 public class bingo {
@@ -107,6 +105,9 @@ public class bingo {
                 break;
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println("범위 초과");
+            }catch (InputMismatchException e){
+                System.out.println("문자는 입력할 수 없습니다.");
+                sc.nextLine(); // 버퍼 안비우면 해당글자가 남아 무한루프에 빠짐
             }
 
         }
@@ -176,19 +177,19 @@ public class bingo {
         int comDiag1 = 0;
         int myDiag2 = 0;
         int comDiag2 = 0;
-        for(int i=0; i<5; i++){
-            if(myBingo[i][i]==0)myDiag1++;
-            if (comBingo[i][i]==0)comDiag1++;
+        for (int i = 0; i < 5; i++) {
+            if (myBingo[i][i] == 0) myDiag1++;
+            if (comBingo[i][i] == 0) comDiag1++;
 
-            if (myBingo[4-i][i]==0)myDiag2++;
-            if (comBingo[4-i][i]==0)comDiag2++;
+            if (myBingo[4 - i][i] == 0) myDiag2++;
+            if (comBingo[4 - i][i] == 0) comDiag2++;
 
 
         }
-        if(myDiag1==5)myCnt++;
-        if(myDiag2==5)myCnt++;
-        if(comDiag1==5)comCnt++;
-        if(comDiag2==5)comCnt++;
+        if (myDiag1 == 5) myCnt++;
+        if (myDiag2 == 5) myCnt++;
+        if (comDiag1 == 5) comCnt++;
+        if (comDiag2 == 5) comCnt++;
 
 
         System.out.println("내 빙고 수 : " + myCnt);
@@ -199,9 +200,40 @@ public class bingo {
     //4. 승리 확인
 //    4-1 매 턴 빙고카운트가 3또는 그 이상이라면 승리
     public static void winner() {
-        if (myCnt >= 3 && comCnt >= 3) System.out.println("비겼습니다.");
-        else if (myCnt >= 3 && comCnt < 3) System.out.println("플레이어가 이겼습니다.");
-        else if (myCnt < 3 && comCnt >= 3) System.out.println("Computer가 이겼습니다.");
+        if (myCnt >= 3 && comCnt >= 3) {
+            System.out.println("비겼습니다.");
+            view();
+            exit(0);
+
+        } else if (myCnt >= 3 && comCnt < 3) {
+            System.out.println("플레이어가 이겼습니다.");
+            view();
+            exit(0);
+
+        } else if (myCnt < 3 && comCnt >= 3) {
+            System.out.println("Computer가 이겼습니다.");
+            view();
+            exit(0);
+        }
+    }
+
+    public static void view() {
+        System.out.println("========My bingo========");
+        for (int i = 0; i < myBingo.length; i++) {
+            for (int j = 0; j < myBingo[i].length; j++) {
+                System.out.printf("[%2d] ",myBingo[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+        System.out.println("========com bingo========");
+        for (int i = 0; i < comBingo.length; i++) {
+            for (int j = 0; j < comBingo[i].length; j++) {
+                System.out.printf("[%2d] ",comBingo[i][j]);
+            }
+            System.out.println("");
+        }
+        System.out.println("");
     }
 
 
@@ -215,3 +247,12 @@ public class bingo {
 
     }
 }
+
+/*
+O    1~25가 겹치지 않고 무작위로 배치되는가?
+O   같은 숫자를 두 번 부를 수 없는가? (나/컴퓨터 모두)
+O    숫자 입력란에 글자를 넣어도 프로그램이 죽지 않는가?
+O    가로·세로·대각선 줄이 정확히 세어지는가?
+O    양쪽이 동시에 목표 줄에 도달하면 무승부 처리가 되는가?
+O    게임이 끝나면 양쪽 판을 모두 보여주는가?
+ */
