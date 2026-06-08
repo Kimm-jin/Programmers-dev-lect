@@ -24,9 +24,9 @@ public class bingo {
 
 
     //1. 빙고 생성
-    //  랜덤을 직접 대입하지않고 중복값인지
-    //  1-1 내 빙고 생성
-    //  1-2 컴퓨터 빙고 생성
+    //  1-1 1차원배열 길이가 25인 배열에 1~25를 저장하고 랜덤함수 실행
+    //  1-2 swap으로 중복없이 난수 생성
+    //  1-3 섞인 1차원배열을 2차원 배열에 넣는다
     public static void createBingo() {
         for (int i = 0; i < myShuffle.length; i++) myShuffle[i] = i + 1;
         for (int i = 0; i < comShuffle.length; i++) comShuffle[i] = i + 1;
@@ -65,9 +65,9 @@ public class bingo {
 
 
     //2. 빙고 진행
-//  2-1 나와 컴퓨터 숫자를 저장
-//    2-2 나와 컴퓨터 빙고판에있는 숫자(String)가 있는지 확인
-//    2-3 있다면 별표로 값 변경
+//    2-1 규격에 맞게 출력
+//    2-2 입력된 숫자(나와 컴퓨터)가 범위,type 이전에 부른 숫자와 중복되지 않는지 확인
+//    2-3 뽑힌 숫자는 0처리
     public static void startGame() {
         Scanner sc = new Scanner(System.in);
         // 빙고판 보여주기(내꺼만)
@@ -99,10 +99,10 @@ public class bingo {
 
                 while (true) {
                     comNum = (int) ((Math.random() * 25) + 1);
-                    if (visited[comNum] == -1) {
-                        continue;
+                    if (visited[comNum] == -1) { // 이미 뽑힌 숫자
+                        continue; // 다시 뽑기
                     } else {
-                        visited[comNum] = -1;
+                        visited[comNum] = -1; // 처음 뽑혀 방문처리
                         break;
                     }
                 }
