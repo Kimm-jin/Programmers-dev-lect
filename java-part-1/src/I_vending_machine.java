@@ -19,11 +19,28 @@ public class I_vending_machine {
 
     // 사용자로부터 메뉴 번호를 받는 함수
     public static int getChoice() {
-        // 내용완성
         Scanner sc = new Scanner(System.in);
         System.out.println("원하는 메뉴를 선택하시오.");
 
         return sc.nextInt();
+    }
+
+    // 사용자한테 돈받기
+    public static int getMoney() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("돈을 넣으시오.");
+
+        return sc.nextInt();
+    }
+
+    // calcMoney 완성해주세요
+    public static int calcMoney(int totalMoney, int price) {
+        return totalMoney - price;
+    }
+
+    // 예외
+    public static void calcMoneyException() {
+        System.out.println("잔돈이 부족합니다.");
     }
 
     static void main(String[] args) {
@@ -34,17 +51,47 @@ public class I_vending_machine {
             printMenu(totalMoney);
             // 사용자 주문번호
             int choice = getChoice();
-
+            int result = -1;
             switch (choice) {
                 case 1:
+                    result = calcMoney(totalMoney, COKE);
+                    // t : 300, coke : 500, result : -200
+                    if ( result < 0 ) {
+                        calcMoneyException();
+                    } else {
+                        totalMoney = result;
+                        System.out.println("콜라가 나왔습니다.");
+                    }
                     break;
                 case 2:
+                    result = calcMoney(totalMoney, CIDER);
+                    if ( result < 0 ) {
+                        calcMoneyException();
+                    } else {
+                        totalMoney = result;
+                        System.out.println("사이다가 나왔습니다.");
+                    }
                     break;
                 case 3:
+                    result = calcMoney(totalMoney, FANTA);
+                    if ( result < 0 ) {
+                        calcMoneyException();
+                    } else {
+                        totalMoney = result;
+                        System.out.println("환타가 나왔습니다.");
+                    }
                     break;
                 case 4:
+                    result = calcMoney(totalMoney, WATER);
+                    if ( result < 0 ) {
+                        calcMoneyException();
+                    } else {
+                        totalMoney = result;
+                        System.out.println("물이 나왔습니다.");
+                    }
                     break;
                 case 5:
+                    totalMoney += getMoney();
                     break;
                 case 6:
                     System.out.println("\n잔돈 " + totalMoney + "원이 반환되었습니다.");
