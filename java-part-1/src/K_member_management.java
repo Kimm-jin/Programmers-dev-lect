@@ -143,7 +143,9 @@ public class K_member_management {
             if(email.equals(members[i][1])){
                 idx=i;
                 // 뒤에 값이 있다면 덮어씌우기
-                if(members[i+1]!=null){ // 뒤에 값이 있다면
+                //i가 length -1일경우 i+1에 접근하지 못해 배열 범위 초과 에러가 날 수 있음
+
+                if(i!=members.length-1&&members[i+1]!=null){ // 뒤에 값이 있다면
                     members[i][0]=members[i+1][0];
                     members[i][1]=members[i+1][1];
                     members[i][2]=members[i+1][2];
@@ -151,7 +153,7 @@ public class K_member_management {
                     members[i+1][0] = null;
                     members[i+1][1] = null;
                     members[i+1][2] = null;
-                }else{ //뒤에 값이 없다면
+                }else{ //뒤에 값이 없거나 마지막 자리면
                     members[i][0] = null;
                     members[i][1] = null;
                     members[i][2] = null;
@@ -159,7 +161,7 @@ public class K_member_management {
             }
         }
         if(idx==-1){
-            System.out.println("그런 회원은 없습니다.");
+            System.out.println("찾으시는 회원이 없습니다.");
             return;
         }
     }
