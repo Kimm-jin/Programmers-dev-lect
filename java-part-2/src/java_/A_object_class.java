@@ -1,4 +1,4 @@
-package java;// * 객체지향 프로그래밍(Object Oriented Programming, OOP)
+package java_;// * 객체지향 프로그래밍(Object Oriented Programming, OOP)
 // 프로그램을 여러 개의 객체(Object)로 나누어 작성하는 방법을 말한다.
 // 객체지향 프로그래밍은 코드의 재사용성과 유지보수성을 높이고,
 // 복잡한 문제를 쉽게 해결할 수 있도록 하는 데 중점을 둔다.
