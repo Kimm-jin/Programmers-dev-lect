@@ -10,6 +10,7 @@ import java.util.Scanner;
  (선택) 숫자가 아닌 글자를 입력해도 프로그램이 죽지 않는가?
  */
 public class updownImpl implements Updown{
+    private Scanner sc = new Scanner(System.in);
     private boolean flag=true;
     private int user;
     private int system;
@@ -26,23 +27,22 @@ public class updownImpl implements Updown{
 
     @Override
     public void inpurtGuess() { //  2. 숫자 입력
-        Scanner sc = new Scanner(System.in);
 
         while (true){
             try{
                 System.out.printf("(범위 1 ~ 100)숫자를 입력해주세요 : ");
-                user = sc.nextInt();
-                sc.nextLine();
+                user = this.sc.nextInt();
+                this.sc.nextLine();
             }catch (InputMismatchException e){
                 System.out.println("문자는 입력할 수 없습니다.");
-                sc.nextLine();
+                this.sc.nextLine();
             }
 
             if(user<1||user>100){
                 System.out.println("범위가 틀렸습니다.");
             }else break;
         }
-        ans++;
+        this.ans++;
         return;
     }
 
