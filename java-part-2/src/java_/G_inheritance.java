@@ -23,10 +23,35 @@
 // 자바에서 상속받은 부모 클래스의 메서드를 자식 클래스에서 재정의하여 사용하는 기법이다.
 // 오버라이딩을 통해 자식 클래스는 부모 클래스의 기본 기능을 유지하면서도,
 // 자신만의 방식으로 그 기능을 수정하거나 확장할 수 있다.
+
+// * 오버라이딩 조건
+// 자식 클래스에서 오버라이딩하는 메서드는 부모 클래스의 메서드와
+// - 이름이 같아야 한다.
+// - 매개변수가 같아야 한다.
+
+// 단, 접근 제어자(public, protected, private 등)와 예외는 제한된 조건하에서만 다르게 변경할 수 있다.
+// 1. 접근 제어자는 부모 클래스의 메서드보다 좁은 범위로 변경할 수 없다.
+// 만일 부모 클래스에 정의된 메서드의 접근 제어자가 protected라면
+// 이를 오버라이딩하는 자식 클래스의 메서드는 접근 제어자가 protected or public이어야 한다.
+// 접근 제어자의 접근 범위를 넓은 것에서 좁은 것 순으로 나열하면,
+// public, protected, (default), private
+// 2. 부모 클래스의 메서드보다 많은 수의 예외를 선언할 수 없다.
 package java_;
 
 public class G_inheritance {
     public static void main(String[] args) {
+        G_dog dog = new G_dog();
+        // 상속 받았기 때문에 부모클래스의 메서드도 사용 가능하다.
+        dog.kind = "korean dog";
+        dog.eat(); // 부모 메서드
+        dog.walk(); // 오버라이딩(재정의) - 부모 walk와 자식 walk의 기능이 다름
+        dog.bark(); // 확장
 
+        G_bird bird = new G_bird();
+        bird.kind = "american bird";
+        bird.eat(); //
+        bird.wing = "gg";
+        bird.walk();
+        bird.fly();
     }
 }
