@@ -23,4 +23,7 @@
 // - Stack      : LIFO 구조를 가지며, 요소를 스택에 추가하고 제거하는데 사용된다.
 
 public class A_collections_list {
+    public static void main(String[] args) {
+        System.out.println("dd");
+    }
 }
