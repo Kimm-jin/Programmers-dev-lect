@@ -1,20 +1,18 @@
-package report_08_회원관리_abstract;
+package report_08_회원관리_interface;
 
 import java.util.Scanner;
-
 /*
-    추상 클래스가 유리한 경우 (이 예제!): 공통 상태(필드) 와 공통 구현이 많을 때. → 회원의 이름·이메일·연락처·getter·update를 부모에 한 번만.
+    인터페이스가 유리한 경우: 상태 없이 "이런 기능을 갖춰라"는 규약만 강제할 때, 또는 여러 규약을 동시에 적용해야 할 때 (implements A, B).
  */
 
-public class Start {
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-// 요금제
         System.out.println("[1]Lite:10 [2]Basic:20 [3]Premium:30");
         int plan = Integer.parseInt(sc.nextLine());
         MemberManager manager = new MemberManager(plan * 10);
 
-        while(true){
+        while (true){
             System.out.println("[수행할 업무를 선택하세요 - 현재 회원수 : " + manager.getCount() + "/" + manager.getCapacity() + "]");
             System.out.println("[1]회원추가 [2]회원조회(메일) [3]회원조회(이름)");
             System.out.println("[4]회원전체조회 [5]회원정보 수정 [6]회원삭제");
@@ -118,6 +116,7 @@ public class Start {
 
 
         }
+
 
     }
 }
