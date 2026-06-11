@@ -25,5 +25,46 @@ package java_;
 
 // 인터페이스 정의
 
+interface M_animal{
+    void makeSound();
+    void eat();
+}
+
+class M_dog implements M_animal{
+
+    @Override
+    public void makeSound() {
+        System.out.println("Dog sound");
+    }
+
+    @Override
+    public void eat() {
+        System.out.println("Dog eats meat");
+    }
+}
+
+class M_cat implements M_animal{
+
+    @Override
+    public void makeSound() {
+        System.out.println("Cat sound");
+    }
+
+    @Override
+    public void eat() {
+        System.out.println("Cat eats fish");
+    }
+}
+
 public class M_interface {
+    public static void main(String[] args) {
+        M_animal myDog = new M_dog();
+        M_animal myCat = new M_cat();
+
+        myDog.makeSound();
+        myDog.eat();
+
+        myCat.makeSound();
+        myCat.eat();
+    }
 }
