@@ -107,6 +107,43 @@ public class A_collections_list {
 
         // 추가
         list.add("apple");
+        list.add(1, "banana");
+
+        list.removeLast();
+
+        // 해당 값을 인덱스로 가져온다.
+        System.out.println(list.get(0));
+
+        // 순회 방법 1 : for 루프 사용
+        for ( int i = 0; i < list.size(); i++ ) {
+            System.out.println(list.get(i));
+        }
+
+        // 순회 방법 2 : 향상된 for 루프 사용
+        for ( String fruit : list ) {
+            System.out.println(fruit);
+        }
+
+        // 순회 방법 3 : Iterator 사용
+        Iterator<String> iterator = list.iterator();
+        while ( iterator.hasNext() ) {
+            String element = iterator.next();
+            System.out.println(element);
+        }
+
+        // 순회 방법 4 : ListIterator 사용 (양방향 순회 가능)
+        ListIterator<String> stringListIterator = list.listIterator();
+        // 정방향
+        while (stringListIterator.hasNext()) {
+            String element = stringListIterator.next();
+            System.out.println(element);
+        }
+        // 역방향
+        while (stringListIterator.hasPrevious()) {
+            String element = stringListIterator.previous();
+            System.out.println(element);
+        }
+
     }
 
     // 3. Stack
@@ -125,7 +162,7 @@ public class A_collections_list {
         String topElement = stack.pop();
         System.out.println("topElemet : " + topElement);
 
-        // PEEK
+        // PEEK = top()
         String peekElement = stack.peek();
         System.out.println("peekElement : " + peekElement);
 
