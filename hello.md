@@ -7,7 +7,33 @@
 
 ---
 
-## 2-3 (2026.06.10)
+<details open>
+<summary><b>2-5 (2026.06.12)</b></summary>
+
+- **과제1 — 복습**
+  - 회원관리 interface 버전 미비되었으면 먼저 진행해주세요.
+  - 오늘 내용 복습 : collections - list, map
+- **과제2 — 실습**
+  - 배열로 MyArrayList 직접 만들기(필수)
+  - 노드로 MyLinkedList 직접 만들기(필수)
+  * 만약 오늘 완료를 하지 못했으면, 주말에 이어서 완료해보세요.
+- **과제3 — 알고리즘**
+
+</details>
+
+<details>
+<summary><b>2-4 (2026.06.11)</b></summary>
+
+- **과제1 — 복습**: 문법 복습, 자판기 프로그램(추상클래스, 인터페이스)
+- **과제2 — 실습**
+  - 자바-회원관리 만들기(추상클래스)
+  - 자바-회원관리 만들기(인터페이스)
+- **과제3 — 알고리즘**
+
+</details>
+
+<details>
+<summary><b>2-3 (2026.06.10)</b></summary>
 
 - **과제1 — 복습**: G_card_play, G_draw_shape
 - **과제2 — 실습**
@@ -18,9 +44,10 @@
 - **과제3 — 알고리즘**
 - **과제4 — OS : CPU 스케줄링**
 
----
+</details>
 
-## 2-2 (2026.06.09)
+<details>
+<summary><b>2-2 (2026.06.09)</b></summary>
 
 - **과제1 — 복습**: 자판기·회원관리 프로그램에서 `static` 제거 → 메모리 시뮬레이션
 - **과제2 — 게임**
@@ -29,9 +56,10 @@
   - 회원관리 프로그램 복습 → 숫자 업다운 게임
 - **과제3 — 알고리즘**
 
----
+</details>
 
-## 2-1 (2026.06.08)
+<details>
+<summary><b>2-1 (2026.06.08)</b></summary>
 
 - **과제1 — 복습**
 - **과제2 — 기본**: 자판기, 회원관리 프로그램
@@ -43,9 +71,10 @@
   - 기본 — PCCE
   - 기본 — 알고리즘 고득점 Kit
 
----
+</details>
 
-## 1-2 (2026.06.06)
+<details>
+<summary><b>1-2 (2026.06.06)</b></summary>
 
 - **과제1**: 문법 복습 (~loop)
 - **과제2 — 자판기 예제**
@@ -58,21 +87,18 @@
   - [PCCE](https://school.programmers.co.kr/learn/challenges?order=recent&page=1&partIds=56388)
   - [PCCP](https://school.programmers.co.kr/learn/challenges?order=recent&page=1&partIds=56389)
 
----
+</details>
 
-## 1-1 (2026.06.04)
+<details>
+<summary><b>1-1 (2026.06.04)</b></summary>
 
 - 레포지토리: `lect` → `임의제목_pra`
-
-### 과제1 (필수)
-- Git → GitHub repository: 오늘 수업 자료 업로드
-- commit / push
-- 오늘 수업 자료 업로드 → 복습 (OS, Git, JDK)
-
-### 과제2 (필수, Java)
-- Java 프로젝트 생성, 진법
-
-### 과제3 (자판기 — 조건문 또는 `while(true)`, 가능한 분만)
+- **과제1 — 필수**
+  - Git → GitHub repository: 오늘 수업 자료 업로드
+  - commit / push
+  - 오늘 수업 자료 업로드 → 복습 (OS, Git, JDK)
+- **과제2 — 필수, Java**: Java 프로젝트 생성, 진법
+- **과제3 — 자판기**: 조건문 또는 `while(true)`, 가능한 분만
 
 ```java
 static final int COKE = 500, CIDER = 700, FANTA = 300, WATER = 200;
@@ -85,9 +111,10 @@ public static void printMenu(int totalMoney) {
 }
 ```
 
-### 주말 과제 (필수)
-- 운영체제: CPU가 메모리의 값을 어떻게 레지스터에 적재해서 돌아가는지 AI를 활용해 학습
+- **주말 과제 — 필수**: 운영체제 — CPU가 메모리의 값을 어떻게 레지스터에 적재해서 돌아가는지 AI를 활용해 학습
 
 > **AI 활용 가이드**
 > - 과제(자판기, 가계부 등) 풀이에는 사용 ✗
 > - 이론 공부에는 사용 ✓
+
+</details>
