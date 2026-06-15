@@ -5,8 +5,14 @@ public class O_member_manager {
     private int memberCount;
 
     public O_member_manager(int capacity) {
+        // 인터페이스는 객체를 생성할 수 없지만
+        // 아래의 경우는 객체 생성이 아닌 implement한 자식들의 공간을 만들어준 개념이다.
         members = new O_member[capacity];
         memberCount = 0;
+    }
+
+    public void add(O_member m){
+        members[memberCount++]=m;
     }
 
     public boolean isFull() {
@@ -50,12 +56,13 @@ public class O_member_manager {
     }
 
     //수정
-    public boolean update(String name, String email, String phone) {
+    public boolean update(String name, String email, String phone, String newEmail) {
+        // 기존 이메일 검색
         O_member byEmail = findByEmail(email);
         if (byEmail == null) return false;
 
         // 실질적 수정 기능은 객체한테 위임
-        byEmail.update(name, email, phone);
+        byEmail.update(name, newEmail, phone);
         return true;
     }
 
