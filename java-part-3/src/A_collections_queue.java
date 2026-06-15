@@ -124,7 +124,7 @@ public class A_collections_queue {
                 return Integer.compare(p1.getAge(), p2.getAge());
             }
         };
-        Queue<A_person> queue = new PriorityQueue<>(ageComparator);
+        Queue<A_person> priorityQueue = new PriorityQueue<>(ageComparator);
 
         // 요소 추가
         priorityQueue.add(new A_person("Alice", 30));
