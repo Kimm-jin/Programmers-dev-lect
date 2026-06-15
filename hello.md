@@ -6,8 +6,21 @@
 > - 금일 학습 내용을 간략하게 정리해서 DM으로 GitHub·블로그 링크를 전달해주세요.
 
 ---
-
 <details open>
+<summary><b>3-1 (2026.06.15)</b></summary>
+
+- **과제1 — 복습**
+  - list직접 구현하기 미비되었으면 먼저 진행해주세요.
+  - 오늘 내용 복습 : collections - queue/set, enum
+- **과제2 — 실습**
+  - HashMap 직접 만들기(필수)
+  - Tree 직접 만들기(필수)
+  - TreeMap 직접 만들기(필수)
+- **과제3 — 알고리즘**
+
+</details>
+
+<details>
 <summary><b>2-5 (2026.06.12)</b></summary>
 
 - **과제1 — 복습**
