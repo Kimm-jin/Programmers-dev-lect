@@ -25,9 +25,6 @@ public class MyTreeMap {
     private int size = 0;
 
     public void put(String key, Integer value) { // add
-//        루트부터 시작해 key.compareTo(현재 키)로 비교.
-//        작으면 왼쪽, 크면 오른쪽으로 내려가다가 빈 자리에 새 노드를 단다.
-//        같은 키면 값만 갱신.
         root = putNode(root, key, value);
     }
 
@@ -47,8 +44,8 @@ public class MyTreeMap {
 
     public Integer get(String key) {
         Node n = root;
-        int cmp = key.compareTo(n.key);
         while (n != null) {
+            int cmp = key.compareTo(n.key);
             if (cmp < 0) n = n.left;
             else if (cmp > 0) n = n.right;
             else return n.value;
