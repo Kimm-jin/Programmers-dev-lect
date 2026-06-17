@@ -41,6 +41,20 @@ import java.util.Arrays;
 //    }
 //}
 
+//class Solution { // 조건 문자열
+//    public int solution(String ineq, String eq, int n, int m) {
+//        boolean answer;
+//        if(ineq.equals(">")){
+//            if(eq.equals("=")) return (n>=m)?1:0;
+//            else return (n>m)?1:0;
+//        }else{
+//            if(eq.equals("=")) return (n<=m)?1:0;
+//            else return (n<m)?1:0;
+//        }
+//
+//    }
+//}
+
 class Solution {
     public int[] solution(int[] num_list) {
         int[] answer = new int[(num_list.length+1)];
@@ -87,5 +101,11 @@ public class d {
             answer[i]=num_list[i];
         }
         System.out.println(Arrays.toString(answer));
+
+        int answer1 = 0;
+        for(int n : num_list){
+            if(n==n)answer1=1;
+        }
+//        return answer1;
     }
 }
