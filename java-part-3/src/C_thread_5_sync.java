@@ -13,40 +13,73 @@
 
 // * 뮤텍스(상호 배제)
 // "열쇠는 단 1개" -> 한 번에 오직 한 스레드만 임계 영역에 들어갈 수 있다.
+// - 위에서 말한 lock(열쇠 하나, 화장실 하나)이 바로 뮤텍스 개념이다.
+// - 자바에서는 모든 객체가 lock(= 모니터)을 하나씩 가지고 있고,
+//   synchronized 가 이 lock을 잡았다/풀었다 해주는 역할을 한다.
+//   -> 즉 synchronized(this) = "이 객체의 뮤텍스를 잡는다" 와 같은 뜻이다.
+// - 참고: 뮤텍스는 열쇠가 1개(한 명만 입장), 세마포어(Semaphore)는 열쇠가 N개(N명 입장)로
+//         여러 스레드의 동시 접근 수를 조절할 때 쓴다. (뮤텍스는 세마포어의 특수한 경우)
 
-class ThreadEx_account{
+// syncronized 사용법 2가지
+// 1) 메서드 전체에 걸기 : 메서드가 끝날 때까지 그 객체의 lock을 잡는다.
+// public syncronized void calcSum() { ... }
+// 2) 일부 블럭에만 걸기 : 꼭 필요한 코드만 { } 로 감싸 lock을 잡는다.
+// sycronized(객체 참조변수) { ...임계 영역... }
+
+// -> lock을 걸고 있으면 다른 스레드는 기다려야 해서 느려진다.
+// 그래서 메서드 전체보다 '필요한 부분만' 동기화 블럭을 거는 게 더 효율적이다.
+
+class ThreadEx_account {
     private int balance = 1000;
-    public int getBalance(){
+
+    public int getBalance() {
         return balance;
     }
 
     // 출금
-    public void withdraw(int money){
-        if (balance >= money){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+    // 동기화 X
+//    public void withdraw(int money){
+//        if (balance >= money){
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            balance -= money;
+//        }
+//    }
+
+    // 동기화 O
+    public void withdraw(int money) {
+        // synchronized : 하나의 스레드만 접근할 수 있게 한다. (뮤텍스)
+        synchronized (this) {
+            // 하나의 스레드만 접근한다면 멀티 스레드를 쓴 효율이 상쇄되는 점도 고려
+            if (balance >= money) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                balance -= money;
             }
-            balance -= money;
         }
     }
 }
-// 통장에서 계속 돈을 출금
-class ThreadEx_bank implements Runnable{
-    private ThreadEx_account account = new ThreadEx_account();
+    // 통장에서 계속 돈을 출금
+    class ThreadEx_bank implements Runnable {
+        private ThreadEx_account account = new ThreadEx_account();
 
-    @Override
-    public void run() {
+        @Override
+        public void run() {
 
-        while (account.getBalance()>0){ // 잔고가 남아 있는 동안 반복
-            // 100, 200, 300 중 임의로 선택해서 출금
-            int money = (int) (Math.random()*3+1)*100;
-            account.withdraw(money);
-            System.out.println("blance : "+account.getBalance());
+            while (account.getBalance() > 0) { // 잔고가 남아 있는 동안 반복
+                // 100, 200, 300 중 임의로 선택해서 출금
+                int money = (int) (Math.random() * 3 + 1) * 100;
+                account.withdraw(money);
+                System.out.println("blance : " + account.getBalance());
+            }
         }
     }
-}
 
 public class C_thread_5_sync {
     public static void main(String[] args) {
