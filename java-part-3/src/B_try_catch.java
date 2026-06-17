@@ -11,6 +11,10 @@
 //  •  catch: try에서 예외가 발생하면 그 예외를 잡아 처리하는 블록이다.
 //  •  finally: 예외 발생 여부와 상관없이 항상 실행되는 블록이다. (주로 자원 정리에 사용)
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 //  •  처리 방식이 같은 여러 예외는 |(파이프)로 묶어 하나의 catch에서 처리할 수 있다. (Java 7 이상)
 public class B_try_catch {
 
@@ -86,6 +90,39 @@ public class B_try_catch {
             tryCatch.checkAge(18);
         }catch (IllegalArgumentException e){
             System.out.println("나이 검증 실패 : " + e.getMessage());
+        }
+    }
+
+    // 5. try-with-resources
+    //  •  try( ... ) 괄호 안에서 자원(스트림 등)을 선언하면, try 블록이 끝날 때 자동으로 close()가 호출된다.
+    //  •  AutoCloseable 인터페이스를 구현한 객체만 사용할 수 있다. (대부분의 입출력 스트림이 해당)
+    //  •  finally에서 직접 close()를 호출하지 않아도 되므로 코드가 간결하고, 자원 해제 누락을 막을 수 있다.
+    public static void exam5(){
+        try (FileInputStream fis = new FileInputStream("test.txt")){
+            int data = fis.read();
+            System.out.println("읽은 데이터 : "+data);
+        }catch (IOException e){
+            System.out.println("파일 처리 중 예외 발생 : "+e.getMessage());
+        }
+        // 위 try가 끝나면(정상이든 예외든) fis.close()가 자동 호출된다.
+    }
+
+    public static void exam5_2(){
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream("test.txt");
+            int data = fis.read();
+            System.out.println("읽은 데이터 : "+data);
+        }catch (IOException e){
+            System.out.println("파일 처리 중 예외 발생" + e.getMessage());
+        }finally {
+            if(fis!=null){
+                try {
+                    fis.close();
+                }catch (IOException e){
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
