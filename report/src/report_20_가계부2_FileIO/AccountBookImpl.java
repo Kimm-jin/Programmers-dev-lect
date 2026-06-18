@@ -3,6 +3,7 @@ package report_20_가계부2_FileIO;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class AccountBookImpl implements AccountBook {
@@ -16,12 +17,10 @@ public class AccountBookImpl implements AccountBook {
 
     @Override
     public void addAccount() {
-//        오늘 날짜로 파일 경로를 만든다. (예: accountbook/2024-09-04.txt)
-//        항목 이름·금액을 반복 입력받아 임시로 모으고 합계를 계산한다.
-//                append 모드(new FileWriter(file, true))로 파일에 형식대로 쓴다.
-//        파일이 없으면 FileWriter가 알아서 만들어 준다. (별도 createNewFile 불필요)
-//        저장한 내용을 화면에도 출력한다.
-        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//        System.out.println("오늘은 날짜는 "+today+" 입니다.");
+        System.out.println("날짜를 입력하세요 (예 : 2026-06-18)");
+        String today = sc.nextLine();
         File file = new File(DIR, today + ".txt");
         int total = 0;
         int price = 0;
@@ -69,6 +68,7 @@ public class AccountBookImpl implements AccountBook {
     public void showAccount() {
         File folder = new File(DIR);
         String[] files = folder.list();
+        Arrays.sort(files);
 
         for (String fileName : files) {
             if (fileName.endsWith(".txt"))
@@ -96,7 +96,7 @@ public class AccountBookImpl implements AccountBook {
     public void deleteAccount() {
         File folder = new File(DIR);
         String[] files = folder.list();
-
+        Arrays.sort(files);
 
         for (String fileName : files) {
             if (fileName.endsWith(".txt"))
