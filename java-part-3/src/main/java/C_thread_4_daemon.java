@@ -49,3 +49,13 @@ public class C_thread_4_daemon implements Runnable {
 
 
 }
+/*
+1. main이 시작된다.
+2. 자동저장용 스레드를 만든다.
+3. thread.setDaemon(true)로 보조 스레드로 만든다.
+4. thread.start()로 자동저장 스레드가 시작된다.
+5. main은 1초마다 숫자를 출력한다.
+6. i == 5일 때 autoSave가 true가 된다.
+7. 데몬 스레드는 3초마다 autoSave를 확인하고 저장 메시지를 찍는다.
+8. main이 끝나면 데몬 스레드는 while(true)여도 같이 종료된다.
+ */
