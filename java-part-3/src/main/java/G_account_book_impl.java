@@ -92,7 +92,25 @@ public class G_account_book_impl implements G_account_book {
 
     @Override
     public void deleteAccount() {
+        String[] dates = listDates();
+        if(dates.length==0){
+            System.out.println("기록이 없습니다.");
+            return;
+        }
 
+        System.out.println("=== 기록된 날짜 ===");
+        for(String date:dates) System.out.println(date);
+
+        System.out.println("삭제할 날짜 입력");
+        String date = sc.nextLine().trim();
+        File file = new File(DIR, date+".txt");
+        if(!file.exists()){
+            System.out.println("그런 날짜가 없습니다.");
+            return;
+        }
+
+        if ( file.delete() ) System.out.println("삭제가 되었습니다.");
+        else System.out.println("삭제 실패");
     }
 
     private int readInt() {
