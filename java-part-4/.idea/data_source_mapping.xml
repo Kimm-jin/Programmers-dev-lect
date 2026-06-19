@@ -3,6 +3,8 @@
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/sql/1_DB개념.sql" value="b18723e1-92a9-4626-ba1a-927b35a7f319" />
     <file url="file://$PROJECT_DIR$/sql/2_GroupBy.sql" value="b18723e1-92a9-4626-ba1a-927b35a7f319" />
+    <file url="file://$PROJECT_DIR$/sql/3_집합연산자.sql" value="b18723e1-92a9-4626-ba1a-927b35a7f319" />
+    <file url="file://$PROJECT_DIR$/sql/4_Join.sql" value="b18723e1-92a9-4626-ba1a-927b35a7f319" />
     <file url="file://$PROJECT_DIR$/src/main/resources/jdbc.sql" value="b18723e1-92a9-4626-ba1a-927b35a7f319" />
   </component>
 </project>

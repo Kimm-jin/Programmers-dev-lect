@@ -3,6 +3,8 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/sql/1_DB개념.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/sql/2_GroupBy.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/sql/3_집합연산자.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/sql/4_Join.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/jdbc.sql" dialect="MySQL" />
   </component>
 </project>
