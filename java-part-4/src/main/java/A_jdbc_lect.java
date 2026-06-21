@@ -6,7 +6,7 @@ public class A_jdbc_lect {
     // 연결 담당
     public Connection connection(){
         Properties props = new Properties();
-
+        System.out.println("db.properties 위치 = " + getClass().getClassLoader().getResource("db.properties"));
         try (InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties")) {
             if (is == null) {
                 throw new RuntimeException("db.properties 파일을 찾을 수 없습니다.");
@@ -31,7 +31,7 @@ public class A_jdbc_lect {
 
     public void insertData(String name, int age, String phone){
         // sql indection 조사
-        String query = "INSERT INTO member (name, age, phone) VALUES (?, ?, ?)";
+        String query = "INSERT INTO mem (name, age, phone) VALUES (?, ?, ?)";
 
         try(
                 Connection conn = connection();
@@ -49,7 +49,7 @@ public class A_jdbc_lect {
 
     //  '*'<< 성능상으로도 좋지않고 남이 봤을때 또 까서 봐야하기 떄문에 명시하여 가독성을 높이는게 좋다.
     public void selectAll(){
-        String query = "SELECT id, name, age, phone FROM member";
+        String query = "SELECT id, name, age, phone FROM mem";
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
@@ -72,7 +72,7 @@ public class A_jdbc_lect {
     }
 
     public void selectOne(int id){
-        String query = "SELECT id, name, age, phone FROM member WHERE id = ?";
+        String query = "SELECT id, name, age, phone FROM mem WHERE id = ?";
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
@@ -94,7 +94,7 @@ public class A_jdbc_lect {
 
     public void updateData(int id, String name, int age, String phone){
         // PK에 맞는 정보면 수정
-        String query = "UPDATE member SET name = ?, age = ?, phone = ? WHERE id = ?";
+        String query = "UPDATE mem SET name = ?, age = ?, phone = ? WHERE id = ?";
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
@@ -116,7 +116,7 @@ public class A_jdbc_lect {
     }
 
     public void deleteData(int id){
-        String query = "DELETE FROM member WHERE id = ?";
+        String query = "DELETE FROM mem WHERE id = ?";
         // 아래 주석을 쓰면 SQL로 인식한다.
         // language=SQL
 
@@ -140,8 +140,8 @@ public class A_jdbc_lect {
     public static void main(String[] args) {
         A_jdbc_lect ajdbc = new A_jdbc_lect();
 //        ajdbc.connection();
-//        ajdbc.insertData("홍길순",21,"010-3333-4444");
-//        ajdbc.selectAll();
+        ajdbc.insertData("홍길순",21,"010-3333-4444");
+        ajdbc.selectAll();
         //ajdbc.selectOne(7);
         //ajdbc.updateData(7, "홍홍홍",30,"010-1111-2121");
 //        ajdbc.selectAll();

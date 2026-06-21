@@ -1,6 +1,8 @@
-public class VipMember implements Member{
+package report_22_회원관리_DB;
+
+public class NormalMember implements Member{
     private String name,email,phone;
-    public VipMember(String name, String email,String phone){
+    public NormalMember(String name, String email,String phone){
         this.name=name;this.email=email;this.phone=phone;
     }
     @Override
@@ -20,12 +22,12 @@ public class VipMember implements Member{
 
     @Override
     public String getGrade() {
-        return "Vip 등급";
+        return "기본 등급";
     }
 
     @Override
     public String getBenefit() {
-        return "10% 할인 + 무료 배송";
+        return "기본 배송";
     }
 
     @Override

@@ -1,3 +1,5 @@
+package report_22_회원관리_DB;
+
 public interface Member {
     public String getName();
     public String getEmail();

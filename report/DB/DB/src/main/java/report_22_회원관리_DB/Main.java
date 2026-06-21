@@ -1,13 +1,15 @@
-package report_21_회원관리_FileIO;
+package report_22_회원관리_DB;
 
 
+
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
     static int readInt(Scanner sc) {
         try {
             return Integer.parseInt(sc.nextLine().trim());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NoSuchElementException e) {
             return -1;
         }
     }
@@ -31,6 +33,11 @@ public class Main {
             int menu = readInt(sc);
             switch (menu) {
                 case 1:
+                    if (manager.isFull()) {
+                        System.out.println("정원이 가득 찼습니다.");
+                        break;
+                    }
+
                     System.out.println("등급 [1]일반 [2]VIP");
 
                     int grade = readInt(sc);
@@ -42,6 +49,12 @@ public class Main {
                     String name = sc.nextLine();
                     System.out.print("이메일 > ");
                     String email = sc.nextLine();
+
+                    if (manager.existsEmail(email)) {
+                        System.out.println("이미 존재하는 이메일입니다.");
+                        break;
+                    }
+
                     System.out.print("연락처 > ");
                     String phone = sc.nextLine();
 
@@ -106,7 +119,6 @@ public class Main {
                     break;
                 case 7:
                     System.out.println("이용해주셔서 감사합니다.");
-                    manager.save();
                     return;
                 default:
                     System.out.println("잘못 눌렀습니다.");

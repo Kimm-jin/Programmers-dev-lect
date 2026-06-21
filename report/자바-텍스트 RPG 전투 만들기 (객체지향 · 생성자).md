@@ -74,7 +74,7 @@ HP를 아무나 직접 바꾸지 못하게 `private`으로 숨기고, `takeDamag
 |파일|역할|
 |---|---|
 |`Character.java`|캐릭터 설계도. 필드(이름/HP/공격력) + 생성자 + 행동 메서드|
-|`Main.java`|용사·몬스터 객체를 만들고 전투를 진행|
+|`report_22_회원관리_DB.Main.java`|용사·몬스터 객체를 만들고 전투를 진행|
 
 > Step 7(도전)에서 `Character`를 부모로 두고 `Hero`/`Monster`로 나누는 상속까지 확장할 수 있습니다.
 
@@ -95,7 +95,7 @@ HP를 아무나 직접 바꾸지 못하게 `private`으로 숨기고, `takeDamag
 1. 필드 `name`, `hp`, `power` (우선 `private`).
 2. 세 값을 받는 생성자 작성 (`this` 사용).
 3. 상태를 출력하는 `showStatus()` 메서드.
-4. `Main`에서 객체 하나 만들어 상태 출력.
+4. `report_22_회원관리_DB.Main`에서 객체 하나 만들어 상태 출력.
 
 **힌트**
 
@@ -115,7 +115,7 @@ public class Character {
         System.out.println(name + " (HP: " + hp + ")");
     }
 }
-// Main
+// report_22_회원관리_DB.Main
 Character hero = new Character("용사", 100, 25);
 hero.showStatus();   // 용사 (HP: 100)
 ```
@@ -156,7 +156,7 @@ public void attack(Character target) {
 
 ---
 
-### Step 3. 한 대씩 주고받기 (`Main.java`)
+### Step 3. 한 대씩 주고받기 (`report_22_회원관리_DB.Main.java`)
 
 **목표**: 용사와 몬스터 두 객체를 만들어 서로 한 번씩 공격해 본다.
 
@@ -182,7 +182,7 @@ hero.showStatus();      // 용사 (HP: 95)
 
 ---
 
-### Step 4. 턴제 전투 반복 (`Main.java`)
+### Step 4. 턴제 전투 반복 (`report_22_회원관리_DB.Main.java`)
 
 **목표**: 둘 중 하나가 쓰러질 때까지 번갈아 공격한다.
 
@@ -239,7 +239,7 @@ Character goblin = new Character("고블린", 50, 8);   // 커스텀 생성자
 
 ---
 
-### Step 6. 몬스터 여러 마리와 연속 전투 (`Main.java`)
+### Step 6. 몬스터 여러 마리와 연속 전투 (`report_22_회원관리_DB.Main.java`)
 
 **목표**: 여러 몬스터를 배열로 만들어, 용사가 차례로 상대하게 한다.
 
@@ -302,7 +302,7 @@ for (Character m : monsters) {
 ## 7. 최종 완성 체크리스트
 
 - [ ] `Character.java` — 필드·생성자(2개)·메서드(attack/takeDamage/isAlive/showStatus)
-- [ ] `Main.java` — 용사 + 몬스터 배열 생성, 연속 전투
+- [ ] `report_22_회원관리_DB.Main.java` — 용사 + 몬스터 배열 생성, 연속 전투
 - [ ] 생성자 오버로딩·체이닝 사용
 - [ ] 전투가 끝까지 진행되고 클리어/게임오버 처리
 

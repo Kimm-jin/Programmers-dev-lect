@@ -7,13 +7,13 @@ public class A_jdbc {
     public Connection connection(){
         // 기본포트
         String url = "jdbc:mysql://localhost:3306/java_basic";
-        String user = "userName"; // 내 아이디
-        String password = "userPassowrd"; // 내 비밀번호
+        String user = "userID"; // 내 mysql 아이디
+        String password = "userPassowrd"; // 내 mysql 비밀번호
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, password);
-            System.out.printf("Conn Success");
+            System.out.println("Conn Success");
 
             return connection;
         } catch (ClassNotFoundException e) {
@@ -25,7 +25,7 @@ public class A_jdbc {
 
     public void insertData(String name, int age, String phone){
         // sql indection 조사
-        String query = "INSERT INTO member (name, age, phone) VALUES (?, ?, ?)";
+        String query = "INSERT INTO mem (name, age, phone) VALUES (?, ?, ?)";
 
         try(
                 Connection conn = connection();
@@ -43,7 +43,7 @@ public class A_jdbc {
 
     //  '*'<< 성능상으로도 좋지않고 남이 봤을때 또 까서 봐야하기 떄문에 명시하여 가독성을 높이는게 좋다.
     public void selectAll(){
-        String query = "SELECT id, name, age, phone FROM member";
+        String query = "SELECT id, name, age, phone FROM mem";
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
@@ -66,7 +66,7 @@ public class A_jdbc {
     }
 
     public void selectOne(int id){
-        String query = "SELECT id, name, age, phone FROM member WHERE id = ?";
+        String query = "SELECT id, name, age, phone FROM mem WHERE id = ?";
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
@@ -88,7 +88,7 @@ public class A_jdbc {
 
     public void updateData(int id, String name, int age, String phone){
         // PK에 맞는 정보면 수정
-        String query = "UPDATE member SET name = ?, age = ?, phone = ? WHERE id = ?";
+        String query = "UPDATE mem SET name = ?, age = ?, phone = ? WHERE id = ?";
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
@@ -110,7 +110,7 @@ public class A_jdbc {
     }
 
     public void deleteData(int id){
-        String query = "DELETE FROM member WHERE id = ?";
+        String query = "DELETE FROM mem WHERE id = ?";
         // 아래 주석을 쓰면 SQL로 인식한다.
         // language=SQL
 
@@ -134,11 +134,11 @@ public class A_jdbc {
     public static void main(String[] args) {
         A_jdbc ajdbc = new A_jdbc();
 //        ajdbc.connection();
-        //ajdbc.insertData("홍길순",21,"010-3333-4444");
+        ajdbc.insertData("홍길순",21,"010-3333-4444");
         ajdbc.selectAll();
-        //ajdbc.selectOne(7);
-        //ajdbc.updateData(7, "홍홍홍",30,"010-1111-2121");
-        ajdbc.selectAll();
-        //ajdbc.deleteData(7);
+//        ajdbc.selectOne(7);
+//        ajdbc.updateData(7, "홍홍홍",30,"010-1111-2121");
+//        ajdbc.selectAll();
+//        ajdbc.deleteData(7);
     }
 }

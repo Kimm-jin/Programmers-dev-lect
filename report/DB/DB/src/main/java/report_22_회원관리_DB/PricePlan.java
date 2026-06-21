@@ -1,3 +1,5 @@
+package report_22_회원관리_DB;
+
 public enum PricePlan {
     Lite(10),
     Basic(20),

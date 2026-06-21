@@ -11,7 +11,7 @@
 
 ## 0. 먼저 알아둘 점
 
-이 과제는 **종합판 회원관리**(`Member` 인터페이스 + `NormalMember`/`VipMember` + `PricePlan` enum + `MemberManager`)가 **이미 있다는 전제**예요. 거기에 **파일 저장/불러오기**만 더합니다.
+이 과제는 **종합판 회원관리**(`report_22_회원관리_DB.Member` 인터페이스 + `report_22_회원관리_DB.NormalMember`/`report_22_회원관리_DB.VipMember` + `report_22_회원관리_DB.PricePlan` enum + `report_22_회원관리_DB.MemberManager`)가 **이미 있다는 전제**예요. 거기에 **파일 저장/불러오기**만 더합니다.
 - 저장 대상은 **회원 목록**이에요. (요금제는 이번엔 매 실행 다시 고릅니다. 요금제까지 저장하는 건 도전 과제로.)
 - 모든 파일 작업은 **예외 처리(try-catch)** 가 필요해요.
 
@@ -50,7 +50,7 @@
 회원 객체를 파일에 그대로 넣을 순 없어요. 그래서 **한 줄 문자열(CSV)** 로 바꿔 저장합니다.
 ```
 홍길동(VIP) 객체  →  "VIP,홍길동,hong@a.com,010-1111"   (저장)
-"VIP,홍길동,..." →  VipMember 객체                      (불러오기)
+"VIP,홍길동,..." →  report_22_회원관리_DB.VipMember 객체                      (불러오기)
 ```
 저장할 땐 객체 → 문자열, 불러올 땐 문자열 → 객체. 이 변환이 핵심이에요.
 
@@ -60,10 +60,15 @@
 
 ### (3) 불러오기 + 등급 복원
 파일의 각 줄을 콤마로 쪼개고, **첫 칸(등급)** 을 보고 알맞은 구현체로 되살립니다.
+
 ```java
+import report_22_회원관리_DB.Member;
+import report_22_회원관리_DB.NormalMember;
+import report_22_회원관리_DB.VipMember;
+
 Member m = grade.equals("VIP")
-    ? new VipMember(name, email, phone)
-    : new NormalMember(name, email, phone);
+        ? new VipMember(name, email, phone)
+        : new NormalMember(name, email, phone);
 ```
 이렇게 해야 불러온 뒤에도 `printInfo()`가 등급별로 다르게 나와요(다형성 복원).
 
@@ -76,11 +81,11 @@ Member m = grade.equals("VIP")
 
 | 파일 | 역할 |
 |------|------|
-| `Member.java` (인터페이스) | 기존 + **`toFileString()`**(CSV 한 줄) 추가 |
-| `NormalMember` / `VipMember` | 기존 그대로 |
-| `PricePlan.java` (enum) | 기존 그대로 |
-| `MemberManager.java` | 기존 + **`save()` / `load()`** 추가 |
-| `Main.java` | 기존 그대로 (매니저가 알아서 저장/불러옴) |
+| `report_22_회원관리_DB.Member.java` (인터페이스) | 기존 + **`toFileString()`**(CSV 한 줄) 추가 |
+| `report_22_회원관리_DB.NormalMember` / `report_22_회원관리_DB.VipMember` | 기존 그대로 |
+| `report_22_회원관리_DB.PricePlan.java` (enum) | 기존 그대로 |
+| `report_22_회원관리_DB.MemberManager.java` | 기존 + **`save()` / `load()`** 추가 |
+| `report_22_회원관리_DB.Main.java` | 기존 그대로 (매니저가 알아서 저장/불러옴) |
 | `members.txt` | **데이터 저장 파일** (자동 생성) |
 
 > import 추가: `java.io.*`
@@ -93,17 +98,17 @@ Member m = grade.equals("VIP")
 
 ---
 
-### Step 1. 회원을 한 줄 문자열로 (`Member.java`)
+### Step 1. 회원을 한 줄 문자열로 (`report_22_회원관리_DB.Member.java`)
 
 **목표**: 회원 객체를 `"등급,이름,이메일,연락처"` 형태의 CSV 한 줄로 바꾸는 메서드를 추가한다.
 
-**할 일**: `Member` 인터페이스에 `default String toFileString()` 추가.
+**할 일**: `report_22_회원관리_DB.Member` 인터페이스에 `default String toFileString()` 추가.
 
 <details>
 <summary>💡 힌트 보기</summary>
 
 ```java
-// Member 인터페이스 안에 추가
+// report_22_회원관리_DB.Member 인터페이스 안에 추가
 default String toFileString() {
     return getGrade() + "," + getName() + "," + getEmail() + "," + getPhone();
 }
@@ -117,7 +122,7 @@ default String toFileString() {
 
 ---
 
-### Step 2. 저장 — save() (`MemberManager.java`)
+### Step 2. 저장 — save() (`report_22_회원관리_DB.MemberManager.java`)
 
 **목표**: 현재 회원 전체를 파일에 쓴다(덮어쓰기).
 
@@ -129,21 +134,23 @@ default String toFileString() {
 <summary>💡 힌트 보기</summary>
 
 ```java
+import report_22_회원관리_DB.Member;
+
 import java.io.*;
 
 // 필드
 private static final String FILE = "members.txt";
 
-// 메서드
-public void save() {
-    try (FileWriter fw = new FileWriter(FILE)) {   // true 없음 = 덮어쓰기
-        for (Member m : members) {
-            fw.write(m.toFileString() + "\n");
+        // 메서드
+        public void save() {
+            try (FileWriter fw = new FileWriter(FILE)) {   // true 없음 = 덮어쓰기
+                for (Member m : members) {
+                    fw.write(m.toFileString() + "\n");
+                }
+            } catch (IOException e) {
+                System.out.println("저장 오류: " + e.getMessage());
+            }
         }
-    } catch (IOException e) {
-        System.out.println("저장 오류: " + e.getMessage());
-    }
-}
 ```
 
 `append`가 아니라 **덮어쓰기**인 게 포인트예요. 매번 전체를 다시 써서 수정·삭제가 반영됩니다.
@@ -154,7 +161,7 @@ public void save() {
 
 ---
 
-### Step 3. 불러오기 — load() (`MemberManager.java`)
+### Step 3. 불러오기 — load() (`report_22_회원관리_DB.MemberManager.java`)
 
 **목표**: 파일을 읽어 회원 객체로 복원한다. 등급에 맞게 Normal/Vip로 되살린다.
 
@@ -166,6 +173,10 @@ public void save() {
 <summary>💡 힌트 보기</summary>
 
 ```java
+import report_22_회원관리_DB.Member;
+import report_22_회원관리_DB.NormalMember;
+import report_22_회원관리_DB.VipMember;
+
 public void load() {
     File file = new File(FILE);
     if (!file.exists()) return;   // 처음 실행이면 파일이 없음
@@ -196,7 +207,7 @@ public void load() {
 
 ---
 
-### Step 4. 시작할 때 불러오기 (`MemberManager.java`)
+### Step 4. 시작할 때 불러오기 (`report_22_회원관리_DB.MemberManager.java`)
 
 **목표**: 매니저가 만들어질 때 자동으로 기존 회원을 불러온다.
 
@@ -206,7 +217,7 @@ public void load() {
 <summary>💡 힌트 보기</summary>
 
 ```java
-public MemberManager(int capacity) {
+public report_22_회원관리_DB.MemberManager(int capacity) {
     this.capacity = capacity;
     load();   // 시작 시 파일에서 회원 복원
 }
@@ -218,7 +229,7 @@ public MemberManager(int capacity) {
 
 ---
 
-### Step 5. 변경될 때마다 저장 (`MemberManager.java`)
+### Step 5. 변경될 때마다 저장 (`report_22_회원관리_DB.MemberManager.java`)
 
 **목표**: 추가·수정·삭제 후 파일을 최신 상태로 유지한다.
 
@@ -228,7 +239,9 @@ public MemberManager(int capacity) {
 <summary>💡 힌트 보기</summary>
 
 ```java
-public void add(Member m) {
+import report_22_회원관리_DB.Member;
+
+public void add(report_22_회원관리_DB.Member m) {
     members.add(m);
     save();             // 추가 후 저장
 }
@@ -242,7 +255,7 @@ public boolean update(String email, String name, String newEmail, String phone) 
 }
 
 public boolean delete(String email) {
-    Member m = findByEmail(email);
+    report_22_회원관리_DB.Member m = findByEmail(email);
     if (m == null) return false;
     members.remove(m);
     save();             // 삭제 후 저장
@@ -283,8 +296,8 @@ public boolean delete(String email) {
 
 ## 7. 최종 완성 체크리스트
 
-- [ ] `Member`에 `toFileString()` 추가
-- [ ] `MemberManager`에 `save()` / `load()` 추가 + 생성자 load + 변경 시 save
+- [ ] `report_22_회원관리_DB.Member`에 `toFileString()` 추가
+- [ ] `report_22_회원관리_DB.MemberManager`에 `save()` / `load()` 추가 + 생성자 load + 변경 시 save
 - [ ] `members.txt`가 자동 생성·갱신됨
 - [ ] 껐다 켜도 회원이 유지됨
 

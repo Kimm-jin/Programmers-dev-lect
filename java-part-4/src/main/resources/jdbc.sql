@@ -10,7 +10,7 @@ USE java_basic;
 
 SHOW TABLES;
 
-CREATE TABLE IF NOT EXISTS member
+CREATE TABLE IF NOT EXISTS mem
 (
     id    INT         NOT NULL AUTO_INCREMENT, -- PK, 자동 증가
     name  VARCHAR(50) NOT NULL,                -- 이름
@@ -19,12 +19,12 @@ CREATE TABLE IF NOT EXISTS member
     PRIMARY KEY (id)
 );
 
-DESC member;
+DESC mem;
 
 SELECT id, name, age, phone
-FROM member;
+FROM mem;
 SELECT *
-FROM member;
+FROM mem;
 
-INSERT INTO member (name, age, phone)
+INSERT INTO mem (name, age, phone)
 VALUES ('홍길동', 20, '010-1234-5678');
