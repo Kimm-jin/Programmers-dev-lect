@@ -1,0 +1,9 @@
+use java_basic;
+
+CREATE TABLE IF NOT EXISTS member(
+    id VARCHAR(10) NOT NULL,
+    grade VARCHAR(10) NOT NULL,
+    name VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    phone VARCHAR(20)
+)

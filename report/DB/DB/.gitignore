@@ -41,3 +41,10 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Local DB config
+src/main/resources/db.properties
+
+# Local data files
+members.txt
+members_backup.txt

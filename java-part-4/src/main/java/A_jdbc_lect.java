@@ -2,23 +2,29 @@ import java.sql.*;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class A_jdbc {
+public class A_jdbc_lect {
     // 연결 담당
     public Connection connection(){
-        // 기본포트
-        String url = "jdbc:mysql://localhost:3306/java_basic";
-        String user = "userName"; // 내 아이디
-        String password = "userPassowrd"; // 내 비밀번호
+        Properties props = new Properties();
 
-        try{
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties")) {
+            if (is == null) {
+                throw new RuntimeException("db.properties 파일을 찾을 수 없습니다.");
+            }
+
+            props.load(is);
+
+            String url = props.getProperty("db.url");
+            String user = props.getProperty("db.user");
+            String password = props.getProperty("db.password");
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, user, password);
-            System.out.printf("Conn Success");
+            System.out.println("Conn Success");
 
             return connection;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -47,7 +53,7 @@ public class A_jdbc {
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
-                ){
+        ){
 
             ResultSet resultSet = pstmt.executeQuery();
 
@@ -70,7 +76,7 @@ public class A_jdbc {
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
-                ){
+        ){
             pstmt.setInt(1,id); // primary_key 는 유일한 값
             ResultSet resultSet = pstmt.executeQuery();
             if(resultSet.next()){
@@ -92,7 +98,7 @@ public class A_jdbc {
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
-                ){
+        ){
 
             pstmt.setString(1,name);
             pstmt.setInt(2,age);
@@ -118,7 +124,7 @@ public class A_jdbc {
         try(
                 Connection conn = connection();
                 PreparedStatement pstmt = conn.prepareStatement(query);
-                ){
+        ){
 
             pstmt.setInt(1,id);
             int result = pstmt.executeUpdate(); // 삭제도 업데이트
@@ -132,13 +138,13 @@ public class A_jdbc {
     }
 
     public static void main(String[] args) {
-        A_jdbc ajdbc = new A_jdbc();
+        A_jdbc_lect ajdbc = new A_jdbc_lect();
 //        ajdbc.connection();
-        //ajdbc.insertData("홍길순",21,"010-3333-4444");
-        ajdbc.selectAll();
+//        ajdbc.insertData("홍길순",21,"010-3333-4444");
+//        ajdbc.selectAll();
         //ajdbc.selectOne(7);
         //ajdbc.updateData(7, "홍홍홍",30,"010-1111-2121");
-        ajdbc.selectAll();
+//        ajdbc.selectAll();
         //ajdbc.deleteData(7);
     }
 }

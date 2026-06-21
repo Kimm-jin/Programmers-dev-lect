@@ -1,0 +1,15 @@
+# IntelliJ
+**/.idea/
+**/*.iml
+**/out/
+
+# Gradle
+**/build/
+**/.gradle/
+
+# Local DB config
+**/src/main/resources/db.properties
+
+# Local data files
+**/members.txt
+**/members_backup.txt
