@@ -14,9 +14,24 @@ import java.sql.*;
 
 // "상속을 통한 확장"
 // 클래스 계층구조를 통해 두 개의 관심이 독립적으로 분리되면서 변경 작업은 한층 용이해졌다.
-// 새로운 DB 연결 방법을 적용해야 할 때는 UserDAO 상속을 통해 확장해주기만 하면 된다.
+// 새로운 DB 연결 방법을 적용해야 할 때는 UserDAO를 상속을 통해 확장해주기만 하면 된다.
+// 이렇게 슈퍼 클래스에 기본적인 로직의 흐름을 만들고,
+// 그 기능의 일부를 추사 메서드나 오버라이딩이 가능한 메서드 등으로 만든 뒤
+// 서브클래스에서 이런 메서드를 필요에 맞게 구현해서 사용하도록 하는 방법을 "템플릿 메서드 패턴"이라고 한다.
+// 이렇게 서브클래스에서 구체적인 오브젝트 생성 방법을 결정하게 하는 것을 "팩토리 메서드 패턴"이라고 부르기도 한다.
+// getConnection() 메서드에서 생성하는 Connection 오브젝트의 구현 클래스는 제각각이겠지만
+// UserDAO는 Connection 인터페이스 타입의 오브젝트라는 것 외에는 관심을 두지 않는다.
 
-public class UserDAO_3 {
+// * 디자인 패턴
+// 소프트웨어 설계 시 특정 상황에서 자주 만나는 문제를 해결하기 위해 사용할 수 있는 재사용 가능한 솔루션을 말한다.
+
+// * 템플릿 메서드 패턴
+// 변하지 않는 기능은 슈퍼클래스에 만들어두고 자주 변경되며 확장할 기능은 서브클래스에서 만들도록 한다.
+// 슈퍼클래스에서 디폴트 기능을 정의해두거나 비워뒀다가
+// 서브클래스에서 선택적으로 오버라이드할 수 있도록 만들어둔 메서드를 훅(hook) 메서드라고 한다.
+
+
+public abstract class UserDAO_3 {
 
     public void add(User user) throws ClassNotFoundException, SQLException {
 
@@ -56,13 +71,10 @@ public class UserDAO_3 {
 
     }
 
-    // 중복 코드의 메서드 추출 -> "메서드 추출"
-    // 리팩토링 : 기존의 코드를 외부의 동작방식에는 변화 없이 내부 구조를 변경해서 재구성하는 작업
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/springtheory", "root", "1234");
-
-        return conn;
-    }
+    // UserDAO의 소스코드를 제공하면, getConnection() 메서드를 원하는 방식으로 확장한후
+    // UserDAO의 기능과 함께 사용할 수 있다.
+    // 기존에는 같은 클래스에 다른 메서드로 분리됐던 DB 커넥션 연결이라는 관심을
+    // 이번에는 상속을 통해 서브클래스로 분리해버리는 것이다.
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
 }
