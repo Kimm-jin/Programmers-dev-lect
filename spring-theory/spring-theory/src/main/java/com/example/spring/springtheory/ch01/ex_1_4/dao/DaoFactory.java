@@ -1,5 +1,7 @@
 package com.example.spring.springtheory.ch01.ex_1_4.dao;
 
+import org.springframework.stereotype.Component;
+
 public class DaoFactory {
 
     public UserDAO userDAO() {

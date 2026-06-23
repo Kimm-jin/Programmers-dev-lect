@@ -1,4 +1,4 @@
-package com.example.spring.springtheory.ch01.ex_1_5.dao;
+package com.example.spring.springtheory.ch01.ex_1_6.dao;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

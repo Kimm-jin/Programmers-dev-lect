@@ -1,4 +1,4 @@
-package com.example.spring.springtheory.ch01.ex_1_5;
+package com.example.spring.springtheory.ch01.ex_1_6;
 
 import com.example.spring.springtheory.ch01.ex_1_1.domain.User;
 import com.example.spring.springtheory.ch01.ex_1_5.dao.DaoFactory;

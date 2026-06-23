@@ -29,4 +29,13 @@ public class Ocp {
             return price * 80 / 100;
         }
     }
+
+    class SilverDiscount implements DiscountPolicy{
+
+        @Override
+        public int discount(int price) {
+            return price * 85 / 100;
+        }
+    }
+
 }

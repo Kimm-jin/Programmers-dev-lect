@@ -1,5 +1,7 @@
 package report_23_SOLID_5원칙;
 
+import java.util.ArrayList;
+
 public class Dip {
 
     interface MessageSender{
@@ -20,6 +22,15 @@ public class Dip {
         public void send(String msg) {
             System.out.println("SMS"+msg);
         }
+    }
+
+    class MockSender implements MessageSender{
+        ArrayList<String> sentMsg = new ArrayList<>();
+        @Override
+        public void send(String msg) {
+            sentMsg.add(msg);
+        }
+        ArrayList<String> getSentMsg(){return sentMsg;}
     }
 
     class NotificationService{

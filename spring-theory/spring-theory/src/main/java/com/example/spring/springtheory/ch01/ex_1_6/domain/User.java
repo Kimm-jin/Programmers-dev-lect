@@ -1,4 +1,4 @@
-package com.example.spring.springtheory.ch01.ex_1_5.domain;
+package com.example.spring.springtheory.ch01.ex_1_6.domain;
 
 // 사용자 정보를 저장할 User클래스
 public class User {

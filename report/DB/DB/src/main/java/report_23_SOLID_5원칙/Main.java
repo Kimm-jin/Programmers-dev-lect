@@ -47,12 +47,17 @@ public class Main {
         System.out.println("===== ISP: 인터페이스 분리 =====");
         Isp isp = new Isp();
         Isp.Printer simplePrinter = isp.new SimplerPrinter();
-
         simplePrinter.print();
+
         Isp.SmartMachine smartScanner = isp.new SmartMachine();
         smartScanner.scan();
         smartScanner.print();
         System.out.println();
+
+        Isp.AllInOneMachine allInOneMachine = isp.new AllInOneMachine();
+        allInOneMachine.fax();
+        allInOneMachine.print();
+        allInOneMachine.scan();
 
 
         // DIP
@@ -60,11 +65,20 @@ public class Main {
         Dip dip = new Dip();
         Dip.NotificationService email =
                 dip.new NotificationService(dip.new EmailSender());
-        email.notify("주문이 완료되었습니다");
+        email.notify(" 주문이 완료되었습니다");
 
         Dip.NotificationService sms =
                 dip.new NotificationService(dip.new SmsSender());
-        sms.notify("주문이 완료되었습니다.");
+        sms.notify(" 주문이 완료되었습니다.");
 
+        Dip.MockSender mockSender = dip.new MockSender();
+
+        Dip.NotificationService service =
+                dip.new NotificationService(mockSender);
+
+        service.notify("주문이 완료되었습니다");
+        service.notify("배송이 시작되었습니다");
+
+        System.out.println(mockSender.getSentMsg());
     }
 }
