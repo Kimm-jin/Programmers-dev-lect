@@ -1,8 +1,8 @@
 package com.example.spring.springtheory.ch02.ex_2_1;
 
-import com.example.spring.springtheory.ch01.ex_1_1.domain.User;
 import com.example.spring.springtheory.ch02.ex_2_1.dao.DaoFactory;
 import com.example.spring.springtheory.ch02.ex_2_1.dao.UserDAO;
+import com.example.spring.springtheory.ch02.ex_2_1.domain.User;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;

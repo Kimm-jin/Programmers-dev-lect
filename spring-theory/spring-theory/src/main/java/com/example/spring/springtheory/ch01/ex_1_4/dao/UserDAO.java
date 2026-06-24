@@ -1,15 +1,16 @@
 package com.example.spring.springtheory.ch01.ex_1_4.dao;
 
+import com.example.spring.springtheory.ch01.ex_1_1.domain.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-
 public class UserDAO {
 
-
+    private SimpleConnectionMaker simpleConnectionMaker;
 
     public UserDAO(SimpleConnectionMaker simpleConnectionMaker) {
         this.simpleConnectionMaker = simpleConnectionMaker;
