@@ -4,9 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UserDAODeleteAll extends UserDAO {
+public class UserDAODeleteAll implements StatementStrategy {
+
     @Override
-    protected PreparedStatement makeStatement(Connection conn) throws ClassNotFoundException, SQLException {
+    public PreparedStatement makeStatement(Connection conn) throws SQLException {
         return conn.prepareStatement("DELETE FROM users");
     }
 }
