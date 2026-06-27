@@ -1,4 +1,4 @@
-package org.example.programmers.Lever_2;
+package Level_2;
 
 import java.util.*;
 class Solution {
