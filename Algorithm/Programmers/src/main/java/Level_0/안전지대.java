@@ -1,7 +1,6 @@
-package org.example.programmers.Lever_0;
+package Level_0;
 
 import java.util.*;
-
 
 class Solution {
     // BFS
@@ -38,7 +37,7 @@ class Solution {
                 if(!visited[i][j])ans++;
         return ans;
     }
-
+11
 /* ------------------------------------------------------------- */
     // bruteforce
     public int solution2(int[][] board) {
