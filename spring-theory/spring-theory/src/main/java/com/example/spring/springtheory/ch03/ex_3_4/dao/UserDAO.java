@@ -7,25 +7,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-// * 익면 내부 클래스
-public class UserDAO_2 {
+public class UserDAO {
 
-    private SimpleConnectionMaker simpleConnectionMaker;
+    private JdbcContext jdbcContext;
 
-    public UserDAO_2(SimpleConnectionMaker simpleConnectionMaker) {
-        this.simpleConnectionMaker = simpleConnectionMaker;
+    public UserDAO(JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
     }
 
-    protected UserDAO_2() {}
+    protected UserDAO() {}
 
-    public void jdbcContextWithStatementStrategy(StatementStrategy statementStrategy) throws SQLException, ClassNotFoundException {
-        try (
-                Connection conn = simpleConnectionMaker.makeNewConnection();
-                PreparedStatement pstmt = statementStrategy.makeStatement(conn); // 변하는 부분을 전략에 위임
-        ) {
-            pstmt.executeUpdate();
-        }
-    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
 
@@ -44,7 +35,7 @@ public class UserDAO_2 {
             }
         };
 
-        jdbcContextWithStatementStrategy( strategy );
+        jdbcContext.workWithStatementStrategy(strategy);
     }
 
     public void deleteAll() throws SQLException, ClassNotFoundException {
@@ -56,7 +47,7 @@ public class UserDAO_2 {
             }
         };
 
-        jdbcContextWithStatementStrategy( strategy );
+        jdbcContext.workWithStatementStrategy(strategy);
     }
 
 
