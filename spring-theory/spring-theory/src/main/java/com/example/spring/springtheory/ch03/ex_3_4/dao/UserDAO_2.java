@@ -1,7 +1,7 @@
-package com.example.spring.springtheory.ch03.ex_3_3.dao;
+package com.example.spring.springtheory.ch03.ex_3_4.dao;
 
 
-import com.example.spring.springtheory.ch03.ex_3_3.domain.User;
+import com.example.spring.springtheory.ch03.ex_3_4.domain.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
