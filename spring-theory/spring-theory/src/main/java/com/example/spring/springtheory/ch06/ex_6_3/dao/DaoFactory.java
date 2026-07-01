@@ -47,7 +47,7 @@ public class DaoFactory {
         return new DefaultPointcutAdvisor( transactionPointcut(), transactionAdvice() );
     }
 
-    // ADvice(무엇을) : 적용할 부가기능 자체(트랜잭션 경계)
+    // Advice(무엇을) : 적용할 부가기능 자체(트랜잭션 경계)
     @Bean
     public TransactionAdvice transactionAdvice(){
         return new TransactionAdvice(transactionManager());
