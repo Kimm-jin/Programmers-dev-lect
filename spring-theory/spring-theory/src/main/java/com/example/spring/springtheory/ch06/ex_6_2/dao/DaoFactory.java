@@ -1,8 +1,11 @@
 package com.example.spring.springtheory.ch06.ex_6_2.dao;
 
-import com.example.spring.springtheory.ch06.ex_6_2.service.TransactionHandler;
+import com.example.spring.springtheory.ch06.ex_6_2.service.TransactionAdvice;
 import com.example.spring.springtheory.ch06.ex_6_2.service.UserService;
 import com.example.spring.springtheory.ch06.ex_6_2.service.UserServiceImpl;
+import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -10,29 +13,44 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.lang.reflect.Proxy;
 
 // DaoFactory를 스프링 빈 팩토리가 사용할 수 있는 설정정보로 리팩토링
 @Configuration // 애플리케이션 컨텍스트 또는 빈 팩토리가 사용할 설정 정보라는 표시
 public class DaoFactory {
 
-    @Bean
-    public UserService userService() {
-        TransactionHandler txHandler = new TransactionHandler(userServiceImpl(), transactionManager(), "upgrade");
 
-        // * 다이나믹 프록시를 런타임 생성
-        // 모드 메서드 호출이 txHandler.invoke()로 전달된다.
-        // "메모리에 흉내낼 클래스를 임시로 만들어서 메서드에 맞게 처리한다"
-        //  - 메모리에 — .java/.class 파일로 디스크에 저장되는 게 아니라, JVM이 런타임에 바이트코드를 즉석 생성해서 메모리에 올린다.
-        //  - 흉내낼 클래스 — UserService 인터페이스를 구현한 $Proxy0을 만든다. 그래서 UserService인 척할 수 있다.
-        //  - 메서드에 맞게 처리 — 호출된 메서드 정보를 invoke()로 넘겨, 우리가 정한 대로 처리한다.
-        // ** 프록시 자신은 "처리"를 안 한다
-        // $Proxy0(프록시)은 처리 로직이 전혀 없다. 어떤 메서드가 불리든 무조건 invoke()로 떠넘기기만 한다.
-        return (UserService) Proxy.newProxyInstance(
-                getClass().getClassLoader(),    // (1) 프록시 클래스를 적재할 클래스로더
-                new Class[]{UserService.class}, // (2) 프록시가 구현(흉내)할 인터페이스
-                txHandler                       // (3) 호출을 받아 처리할 핸들러
-        );
+    // UserService 빈 = ProxyFactoryBean이 생산하는 프록시
+    //  - target과 advisor만 등록하면, 스프링이 프록시를 알아서 만들어준다.
+    //  - 여러 advisor를 addAdvisor로 얹을 수도 있다(부가기능 여러 개 조합).
+    @Bean
+    public ProxyFactoryBean userService() {
+        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
+        proxyFactoryBean.setTarget( userServiceImpl() );
+        proxyFactoryBean.addAdvisor( transactionAdvisor() );
+        return proxyFactoryBean;
+    }
+
+    // Advisor = Pointcut + Advice
+    //  - 부가기능과 적용대상을 묶은 한 덩어리. ProxyFactoryBean에는 이 Advisor 단위로 등록한다.
+    @Bean
+    public DefaultPointcutAdvisor transactionAdvisor(){
+        return new DefaultPointcutAdvisor( transactionPointcut(), transactionAdvice() );
+    }
+
+    // ADvice(무엇을) : 적용할 부가기능 자체(트랜잭션 경계)
+    @Bean
+    public TransactionAdvice transactionAdvice(){
+        return new TransactionAdvice(transactionManager());
+    }
+
+    // Pointcut(어디에) : 어떤 메서드에 부가기능을 적용할지 '선별'한다.
+    //  - ex_6_1에서는 핸들러 안에서 startsWith로 직접 걸렀지만, 이제 그 책임이 Pointcut으로 분리됐다.
+    //  - NameMatchMethodPointcut: 메서드 이름 패턴으로 매칭. "upgrade*" -> upgradeLevels 등.
+    @Bean
+    public NameMatchMethodPointcut transactionPointcut(){
+        NameMatchMethodPointcut nameMatchMethodPointcut = new NameMatchMethodPointcut();
+        nameMatchMethodPointcut.setMappedName("upgrade*");
+        return nameMatchMethodPointcut;
     }
 
     @Bean
