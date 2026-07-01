@@ -1,8 +1,8 @@
-package com.example.spring.springtheory.ch05.ex_5_4.service;
+package com.example.spring.springtheory.ch06.ex_6_2.service;
 
-import com.example.spring.springtheory.ch05.ex_5_4.dao.Level;
-import com.example.spring.springtheory.ch05.ex_5_4.dao.UserDAO;
-import com.example.spring.springtheory.ch05.ex_5_4.domain.User;
+import com.example.spring.springtheory.ch06.ex_6_2.dao.Level;
+import com.example.spring.springtheory.ch06.ex_6_2.dao.UserDAO;
+import com.example.spring.springtheory.ch06.ex_6_2.domain.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -32,11 +32,9 @@ public class UserServiceImpl implements UserService {
     public static final int MIN_RECOMMEND_FOR_GOLD = 30;
 
     private UserDAO userDAO;
-    private MailSender mailSender;
 
-    public UserServiceImpl(UserDAO userDAO, MailSender mailSender) {
+    public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
-        this.mailSender = mailSender;
     }
 
     // 신규가입
@@ -81,18 +79,6 @@ public class UserServiceImpl implements UserService {
     protected void upgradeLevel(User user) throws SQLException, ClassNotFoundException {
         user.upgradeLevel();
         userDAO.update(user);
-        sendUpgradeEmail(user);
-    }
-
-    // '메일을 만들어 보낸다'까지만 한다. '어떻게 실제로 보내는가'는 주입된 mailSender에 맡긴다.
-    private void sendUpgradeEmail(User user) {
-        // User에 email 필드가 없으므로 예시로 id를 주소처럼 사용한다(실무라면 user.getEmail()).
-        Mail mail = new Mail(
-                user.getId(),
-                "[안내] 등급이 업그레이드되었습니다",
-                user.getName() + "님의 등급이 " + user.getLevel() + " 로 변경되었습니다."
-        );
-        mailSender.send(mail);
     }
 
 }
