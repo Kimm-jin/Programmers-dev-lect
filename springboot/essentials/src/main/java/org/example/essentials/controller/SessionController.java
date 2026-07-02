@@ -1,6 +1,11 @@
 package org.example.essentials.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 // * 세션(Session)이란?
 // HTTP는 '무상태'라 각 요청이 서로를 기억하지 못한다
@@ -22,6 +27,40 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class SessionController {
 
-}
+    @GetMapping("/login")
+    public String login(
+            HttpSession session,
+            Model model
+    ) {
+        System.out.println("login page : " + session.getAttribute("username"));
 
+        String username = (String) session.getAttribute("username");
+
+        if (username != null) {
+            model.addAttribute("username", username);
+        }
+
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginExc(
+            @RequestParam String username,
+            HttpSession session
+    ) {
+        System.out.println("user name : " + username);
+        session.setAttribute("username", username);
+
+        return "redirect:/login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        // 무효화
+        session.invalidate();
+
+        return "redirect:/login";
+    }
+
+}
 
