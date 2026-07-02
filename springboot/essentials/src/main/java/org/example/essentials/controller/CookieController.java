@@ -60,7 +60,7 @@ public class CookieController {
         Cookie cookie = new Cookie("username", username);
 
         // 유효 기간
-        cookie.setMaxAge(7*24*60*60); // 1주일
+        cookie.setMaxAge(7*24*60*60); // 1주일 (day, hour, min, sec)
 
         // HttpOnly : 자바스크립트(document.cookie)로는 못 읽게 막는다. XSS 공격 방어에 쓴다.
         cookie.setHttpOnly(true);
