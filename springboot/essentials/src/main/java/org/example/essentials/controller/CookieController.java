@@ -29,11 +29,114 @@ package org.example.essentials.controller;
 //   - 정리하면, 서버가 사용자를 기억해야 하면 '쿠키/세션'을,
 //     브라우저에서 JS 로만 임시 데이터를 다루면 '웹 스토리지'를 쓴다.
 
+//import org.springframework.boot.web.server.Cookie;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class CookieController {
 
+    @GetMapping("/set-cookie")
+    public String setCooke(){
+        return "set-cookie";
+    }
+
+    @PostMapping("/set-cookie")
+    public String setCookieExc(
+            @RequestParam String username,
+            HttpServletResponse response,
+            Model model
+    ){
+        // 쿠키 생성
+        Cookie cookie = new Cookie("username", username);
+
+        // 유효 기간
+        cookie.setMaxAge(7*24*60*60); // 1주일
+
+        // HttpOnly : 자바스크립트(document.cookie)로는 못 읽게 막는다. XSS 공격 방어에 쓴다.
+        cookie.setHttpOnly(true);
+
+        // Path : 브라우저가 이 쿠키를 어떤 경로 요청에 보낼지 정한다.
+        //        지정한 경로와 그 하위 경로 요청에만 쿠키가 실려 간다.
+        //        "/" 는 모든 경로가 "/"로 시작하므로, 사이트 전체 요청에 항상 보낸다는 뜻이다.
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
+
+        model.addAttribute("message","쿠키가 설정되었습니다.");
+
+        return "result-cookie";
+    }
+
+    // 쿠키 읽기
+    @GetMapping("/get-cookie")
+    public String getCookie(
+            HttpServletRequest request,
+            Model model
+    ){
+        Cookie[] cookies = request.getCookies();
+        String username = null;
+
+        if(cookies!=null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("username")){
+                    username = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if(username!=null){
+            model.addAttribute("username",username);
+            model.addAttribute("message","쿠키에서 사용자 정보를 읽었습니다.");
+        }else{
+            model.addAttribute("message","쿠키가 존재합니다.");
+        }
+        return "result-cookie";
+    }
+
+    // 쿠키 읽기 (@CookieValue 버전) : 위 getCookie() 와 결과는 같지만 훨씬 간결하다.
+    // - @CookieValue("username") 을 쓰면, 스프링이 그 이름의 쿠키를 알아서 찾아
+    //   매개변수 username 에 값을 넣어 준다. (DispatcherServlet 이 파라미터를 만들어 주는 단계다.)
+    // - required = false : 해당 쿠키가 없어도 에러 없이 진행한다. 없으면 null 이 들어온다.
+    //   (기본값은 true 라, 쿠키가 없으면 400 에러가 나므로 조회용에서는 false 로 두는 게 안전하다.)
+    // - 없을 때 기본값을 주고 싶으면 defaultValue = "guest" 처럼 지정할 수도 있다.
+    @GetMapping("/get-cookie2")
+    public String getCookieByAnnotation(
+            @CookieValue(value = "username", required = false) String username,
+            Model model
+    ){
+        if(username!=null){
+            model.addAttribute("username",username);
+            model.addAttribute("message","쿠키에서 사용자 정보를 읽었습니다.");
+        }else{
+            model.addAttribute("message","쿠키가 존재합니다.");
+        }
+        return "result-cookie";
+    }
+
+    @GetMapping("/delete-cookie")
+    public String deleteCookie(
+            HttpServletResponse response,
+            Model model
+    ){
+        Cookie cookie = new Cookie("username","");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        model.addAttribute("message","쿠키가 삭제되었습니다.");
+        return "result-cookie";
+    }
 
 
 }
