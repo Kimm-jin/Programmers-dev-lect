@@ -1,4 +1,4 @@
-package org.example.essentials.controller;
+package com.example.spring.essentials.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
