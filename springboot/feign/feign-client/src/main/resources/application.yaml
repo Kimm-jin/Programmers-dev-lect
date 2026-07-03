@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: feign-client
+
+feign-api:
+  url: http://localhost:8083
