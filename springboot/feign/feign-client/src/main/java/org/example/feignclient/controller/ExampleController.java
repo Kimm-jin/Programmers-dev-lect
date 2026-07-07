@@ -1,21 +1,34 @@
 package org.example.feignclient.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.feignclient.client.ExampleClient;
-import org.example.feignclient.service.EaxmpleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.feignclient.service.ExampleService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/feign")
+@RequestMapping("/feign/data")
 public class ExampleController {
-    private final EaxmpleService eaxmpleService;
 
-    @GetMapping("/data/{id}")
-    public String getData(@PathVariable Long id){
-        return eaxmpleService.getDataById(id);
+    private final ExampleService exampleService;
+
+    @GetMapping("/{id}")
+    public String getData(@PathVariable Long id) {
+        return exampleService.getDataById(id);
     }
+
+    @PostMapping
+    public String createData(@RequestParam String name, @RequestParam int value) {
+        return exampleService.createData(name, value);
+    }
+
+    @PutMapping("/{id}")
+    public String updateData(@PathVariable Long id, @RequestParam String name, @RequestParam int value) {
+        return exampleService.updateData(id, name, value);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteData(@PathVariable Long id) {
+        return exampleService.deleteData(id);
+    }
+
 }
