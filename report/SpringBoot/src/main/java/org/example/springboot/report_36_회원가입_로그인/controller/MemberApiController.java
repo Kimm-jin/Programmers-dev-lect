@@ -1,12 +1,12 @@
-package org.example.springboot.report_36_회원가입.controller;
+package org.example.springboot.report_36_회원가입_로그인.controller;
 
 import jakarta.servlet.http.HttpSession;
-import org.example.springboot.report_36_회원가입.constant.SessionConst;
-import org.example.springboot.report_36_회원가입.dto.LoginRequestDto;
-import org.example.springboot.report_36_회원가입.dto.LoginResponseDto;
-import org.example.springboot.report_36_회원가입.dto.MemberJoinRequestDto;
-import org.example.springboot.report_36_회원가입.dto.MemberJoinResponseDto;
-import org.example.springboot.report_36_회원가입.service.MemberService;
+import org.example.springboot.report_36_회원가입_로그인.constant.SessionConst;
+import org.example.springboot.report_36_회원가입_로그인.dto.LoginRequestDto;
+import org.example.springboot.report_36_회원가입_로그인.dto.LoginResponseDto;
+import org.example.springboot.report_36_회원가입_로그인.dto.MemberJoinRequestDto;
+import org.example.springboot.report_36_회원가입_로그인.dto.MemberJoinResponseDto;
+import org.example.springboot.report_36_회원가입_로그인.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

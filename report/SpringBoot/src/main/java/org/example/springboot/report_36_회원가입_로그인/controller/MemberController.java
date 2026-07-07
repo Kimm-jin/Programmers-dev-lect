@@ -1,10 +1,9 @@
-package org.example.springboot.report_36_회원가입.controller;
+package org.example.springboot.report_36_회원가입_로그인.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller

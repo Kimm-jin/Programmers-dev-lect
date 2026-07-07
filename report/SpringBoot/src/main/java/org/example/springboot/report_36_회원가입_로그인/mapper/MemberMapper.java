@@ -1,8 +1,7 @@
-package org.example.springboot.report_36_회원가입.mapper;
+package org.example.springboot.report_36_회원가입_로그인.mapper;
 
-import org.example.springboot.report_36_회원가입.domain.entity.Member;
-import org.example.springboot.report_36_회원가입.dto.MemberJoinRequestDto;
-import org.example.springboot.report_36_회원가입.dto.MemberJoinResponseDto;
+import org.example.springboot.report_36_회원가입_로그인.domain.entity.Member;
+import org.example.springboot.report_36_회원가입_로그인.dto.MemberJoinRequestDto;
 import org.springframework.stereotype.Component;
 
 @Component

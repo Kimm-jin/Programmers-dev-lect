@@ -1,6 +1,6 @@
-package org.example.springboot.report_36_회원가입.exception;
+package org.example.springboot.report_36_회원가입_로그인.exception;
 
-import org.example.springboot.report_36_회원가입.dto.ErrorResponseDto;
+import org.example.springboot.report_36_회원가입_로그인.dto.ErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

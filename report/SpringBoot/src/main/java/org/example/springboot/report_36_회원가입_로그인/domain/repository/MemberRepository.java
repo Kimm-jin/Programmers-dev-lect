@@ -1,6 +1,6 @@
-package org.example.springboot.report_36_회원가입.domain.repository;
+package org.example.springboot.report_36_회원가입_로그인.domain.repository;
 
-import org.example.springboot.report_36_회원가입.domain.entity.Member;
+import org.example.springboot.report_36_회원가입_로그인.domain.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

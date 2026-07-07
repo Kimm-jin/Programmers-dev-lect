@@ -1,13 +1,13 @@
-package org.example.springboot.report_36_회원가입.service;
+package org.example.springboot.report_36_회원가입_로그인.service;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.springboot.report_36_회원가입.domain.entity.Member;
-import org.example.springboot.report_36_회원가입.domain.repository.MemberRepository;
-import org.example.springboot.report_36_회원가입.dto.LoginRequestDto;
-import org.example.springboot.report_36_회원가입.dto.MemberJoinRequestDto;
-import org.example.springboot.report_36_회원가입.exception.DuplicateUserIdException;
-import org.example.springboot.report_36_회원가입.mapper.MemberMapper;
+import org.example.springboot.report_36_회원가입_로그인.domain.entity.Member;
+import org.example.springboot.report_36_회원가입_로그인.domain.repository.MemberRepository;
+import org.example.springboot.report_36_회원가입_로그인.dto.LoginRequestDto;
+import org.example.springboot.report_36_회원가입_로그인.dto.MemberJoinRequestDto;
+import org.example.springboot.report_36_회원가입_로그인.exception.DuplicateUserIdException;
+import org.example.springboot.report_36_회원가입_로그인.mapper.MemberMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

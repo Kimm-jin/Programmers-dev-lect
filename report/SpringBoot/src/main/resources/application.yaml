@@ -1,3 +1,16 @@
+weather:
+  api:
+    key: 539326b688980548270d10b24953b698faa91b70fe4f27267c72accf6015ac00
+
 spring:
   application:
     name: Springboot
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update

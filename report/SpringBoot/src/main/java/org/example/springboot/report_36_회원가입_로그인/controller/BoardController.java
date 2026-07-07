@@ -1,4 +1,4 @@
-package org.example.springboot.report_36_회원가입.controller;
+package org.example.springboot.report_36_회원가입_로그인.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;

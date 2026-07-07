@@ -1,4 +1,4 @@
-package org.example.springboot.report_36_회원가입.domain.entity;
+package org.example.springboot.report_36_회원가입_로그인.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

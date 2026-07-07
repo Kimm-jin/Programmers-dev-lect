@@ -1,4 +1,4 @@
-package org.example.springboot.report_36_회원가입.dto;
+package org.example.springboot.report_36_회원가입_로그인.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
