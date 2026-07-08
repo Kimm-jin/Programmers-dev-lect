@@ -4,10 +4,7 @@ import com.example.spring.basicboard.domain.entity.Board;
 import com.example.spring.basicboard.dto.BoardListResponseDto;
 import com.example.spring.basicboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,5 +36,10 @@ public class BoardApiController {
                 .last(last)
                 .totalPages(totalPages)
                 .build();
+    }
+
+    @PostMapping
+    public void saveBoard(){
+
     }
 }
