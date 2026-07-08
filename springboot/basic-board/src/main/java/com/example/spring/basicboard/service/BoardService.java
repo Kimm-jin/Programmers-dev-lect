@@ -3,6 +3,7 @@ package com.example.spring.basicboard.service;
 
 import com.example.spring.basicboard.domain.entity.Board;
 import com.example.spring.basicboard.domain.repository.BoardRepository;
+import com.example.spring.basicboard.exception.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -50,8 +52,13 @@ public class BoardService {
                 .title(title)
                 .content(content)
                 .filePath(filePath)
+                .created(LocalDateTime.now())
                 .build();
         boardRepository.save(bulid);
     }
 
+    public Board getBoardDetail(long id){
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new BoardNotFoundException("[BOARD] 게시글을 찾을 수 없습니다."));
+    }
 }
