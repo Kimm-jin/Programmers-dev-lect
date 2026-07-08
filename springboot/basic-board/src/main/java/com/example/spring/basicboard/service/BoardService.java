@@ -19,6 +19,7 @@ import java.util.List;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final FileService fileService;
 
     // pagenation
     public List<Board> getBoardList(int page, int size){
@@ -39,8 +40,18 @@ public class BoardService {
         return (int) boardRepository.count();
     }
 
-    public void saveBoard(String userId, String title, String content, MultipartFile file){
 
+    @Transactional
+    public void saveBoard(String userId, String title, String content, MultipartFile file){
+        String filePath = fileService.storeFile(file);
+
+        Board bulid = Board.builder()
+                .userId(userId)
+                .title(title)
+                .content(content)
+                .filePath(filePath)
+                .build();
+        boardRepository.save(bulid);
     }
 
 }

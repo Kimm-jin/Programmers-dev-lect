@@ -26,7 +26,7 @@ spring:
     # 소켓(socket)과 연결(connection)
     # - "내쪽 IP:port"와 "상대 IP:port"한 쌍이 이어지면 하나의 '연결(connection)'이 된다.
     # - 프로그램은 이 연결의 양 끝의 '소켓'이라는 창구로 다룬다.
-    url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/java_basic?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: 1234
 
