@@ -32,7 +32,7 @@ public class FileService {
         try{
             // 절대 경로로 다뤄 실행 위치에 영향받지 않게 한다.
             File dir = new File(uploadDir).getAbsoluteFile();
-            if (!dir.exists()) dir.mkdir();
+            if (!dir.exists()) dir.mkdirs();
             // 중복 시 파일 이름 처리
             String storedFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
             File dest = new File(dir, storedFileName);

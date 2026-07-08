@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BoardNotFoundException.class)
-    public ResponseEntity<ErrorResponseDto> boardNotFOundException(BoardNotFoundException e){
+    public ResponseEntity<ErrorResponseDto> boardNotFoundException(BoardNotFoundException e){
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(
