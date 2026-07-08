@@ -1,9 +1,7 @@
 package com.example.spring.basicboard.controller;
 
 import com.example.spring.basicboard.domain.entity.Board;
-import com.example.spring.basicboard.dto.BoardDetailResponseDto;
-import com.example.spring.basicboard.dto.BoardListResponseDto;
-import com.example.spring.basicboard.dto.BoardWriteRequestDto;
+import com.example.spring.basicboard.dto.*;
 import com.example.spring.basicboard.service.BoardService;
 import com.example.spring.basicboard.service.FileService;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +26,10 @@ public class BoardApiController {
     @GetMapping
     public BoardListResponseDto getBoardList(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10")int size
-    ){
+            @RequestParam(defaultValue = "10") int size
+    ) {
         // 게시글 목록
-        List<Board> boards = boardService.getBoardList(page,size);
+        List<Board> boards = boardService.getBoardList(page, size);
 
         // 전체 게시글 수 가져오기
         int totalBoards = boardService.getTotalBoards();
@@ -50,12 +48,12 @@ public class BoardApiController {
     }
 
     @PostMapping
-    public void saveBoard(@ModelAttribute BoardWriteRequestDto dto){
+    public void saveBoard(@ModelAttribute BoardWriteRequestDto dto) {
         boardService.saveBoard(dto.getUserId(), dto.getTitle(), dto.getContent(), dto.getFile());
     }
 
     @GetMapping("/{id}")
-    public BoardDetailResponseDto getBoardDetail(@PathVariable long id){
+    public BoardDetailResponseDto getBoardDetail(@PathVariable long id) {
         Board boardDetail = boardService.getBoardDetail(id);
         return BoardDetailResponseDto.builder()
                 .title(boardDetail.getTitle())
@@ -72,7 +70,7 @@ public class BoardApiController {
     // Content-Disposition: attachment 헤더를 붙일 방법이 없다.
     // -> 그러면 다운로드가 아니라 브라우저가 파일을 그냥 열어버리고, 저장 파일명도 못 정한다.
     @GetMapping("/file/download/{fileName}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName){
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
         Resource resource = fileService.downloadFile(fileName);
 
         // * 한글 파일명 인코딩
@@ -95,7 +93,17 @@ public class BoardApiController {
         // UTF-8 뒤에 '' : 언어필드 (ex UTF-8'ko')
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''"+encodedFileName)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
                 .body(resource);
+    }
+
+    @PutMapping("/{id}")
+    public void updateBoard(@PathVariable long id, @ModelAttribute BoardUpdateRequestDto dto){
+        boardService.updateBoard(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBoard(@PathVariable long id, @RequestBody BoardDeleteRequestDto dto) {
+        boardService.deleteBoard(id, dto);
     }
 }

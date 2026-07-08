@@ -3,6 +3,8 @@ package com.example.spring.basicboard.service;
 
 import com.example.spring.basicboard.domain.entity.Board;
 import com.example.spring.basicboard.domain.repository.BoardRepository;
+import com.example.spring.basicboard.dto.BoardDeleteRequestDto;
+import com.example.spring.basicboard.dto.BoardUpdateRequestDto;
 import com.example.spring.basicboard.exception.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -42,7 +44,7 @@ public class BoardService {
         return (int) boardRepository.count();
     }
 
-
+    // 해당 부분 리팩토링 시 일관되게 dto로 해보기
     @Transactional
     public void saveBoard(String userId, String title, String content, MultipartFile file){
         String filePath = fileService.storeFile(file);
@@ -60,5 +62,29 @@ public class BoardService {
     public Board getBoardDetail(long id){
         return boardRepository.findById(id)
                 .orElseThrow(() -> new BoardNotFoundException("[BOARD] 게시글을 찾을 수 없습니다."));
+    }
+
+    @Transactional
+    public void updateBoard(long id, BoardUpdateRequestDto dto){
+        Board board = boardRepository.findById(id)
+                .orElseThrow(
+                        () -> new BoardNotFoundException("[BOARD] 수정할 게시글을 찾을 수 없습니다. id : " + id)
+                );
+        String filePath = board.getFilePath();
+        if(dto.isFileFlag()){ // 파일 변경이 있었을 경우
+            fileService.deleteFile(filePath); // 기존 파일 삭제
+            filePath = fileService.storeFile(dto.getFile()); // 새 파일 저장
+        }
+        board.update( dto.getTitle(), dto.getContent(), filePath);
+    }
+
+    @Transactional
+    public void deleteBoard(long id, BoardDeleteRequestDto dto){
+
+        if(!boardRepository.existsById(id)){
+            throw new BoardNotFoundException("[BOARD] 삭제할 게시글을 찾을 수 없습니다. id : "+id);
+        }
+        boardRepository.deleteById(id);
+        fileService.deleteFile(dto.getFilePath());
     }
 }
