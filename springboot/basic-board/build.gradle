@@ -37,4 +37,21 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    systemProperty 'file.encoding', 'UTF-8'
+    jvmArgs '-Dsun.stdout.encoding=UTF-8', '-Dsun.stderr.encoding=UTF-8'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaExec).configureEach {
+    systemProperty 'file.encoding', 'UTF-8'
+    jvmArgs '-Dsun.stdout.encoding=UTF-8', '-Dsun.stderr.encoding=UTF-8'
+}
+
+bootRun {
+    systemProperty 'file.encoding', 'UTF-8'
+    systemProperty 'sun.stdout.encoding', 'UTF-8'
+    systemProperty 'sun.stderr.encoding', 'UTF-8'
 }
