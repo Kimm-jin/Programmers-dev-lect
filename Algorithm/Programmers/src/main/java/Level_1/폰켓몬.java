@@ -55,9 +55,10 @@ Set.size()와 nums.length중 더 작은값 반환
 시간복잡도
 O(N + 200000),  O(N)
 
-상태값
+사용 변수 및 자료구조 1
 int[] arr = new int[200001]
 int answer
 
+사용 변수 및 자료구조 2
 Set<Integer> set = new HashSet<>();
 */
