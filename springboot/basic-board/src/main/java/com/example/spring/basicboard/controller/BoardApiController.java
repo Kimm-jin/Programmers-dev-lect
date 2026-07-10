@@ -2,6 +2,7 @@ package com.example.spring.basicboard.controller;
 
 import com.example.spring.basicboard.domain.entity.Board;
 import com.example.spring.basicboard.dto.*;
+import com.example.spring.basicboard.mapper.BoardMapper;
 import com.example.spring.basicboard.service.BoardService;
 import com.example.spring.basicboard.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +30,10 @@ import java.util.List;
 // - @ApiResponse(s)      : 이 API가 낼 수 있는 응답(상태코드별)을 문서에 명시
 // - @Content / @Schema   : 응답/요청 본문의 "형태(어떤 DTO인지)"를 지정
 
+// * 뷰 컨트롤러(@Controller + 뷰 이름 반환)는 이 설정과 무관하게 원래 문서에 안 나온다.
+// - springdoc 은 @ResponseBody(= @RestController) 핸들러만 문서화 대상으로 삼기 때문이다.
+// -(BoardController/MemberController 는 "board-list" 같은 뷰 이름을 반환하므로 애초에 제외된다)
+
 @Tag( name = "게시글 API", description = "게시글 목록/상세 조회, 작성, 수정, 삭제, 첨부파일 다운로드" )
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +41,7 @@ import java.util.List;
 public class BoardApiController {
     private final BoardService boardService;
     private final FileService fileService;
+    private final BoardMapper boardMapper;
 
     @Operation(
             summary = "게시글 목록 조회",
@@ -51,6 +57,8 @@ public class BoardApiController {
         // 게시글 목록
         List<Board> boards = boardService.getBoardList(page, size);
 
+        List<BoardListItemResponseDto> boardItems = boardMapper.toDtoList(boards);
+
         // 전체 게시글 수 가져오기
         int totalBoards = boardService.getTotalBoards();
 
@@ -61,7 +69,7 @@ public class BoardApiController {
         boolean last = page >= totalPages;
 
         return BoardListResponseDto.builder()
-                .boards(boards)
+                .boards(boardItems)
                 .last(last)
                 .totalPages(totalPages)
                 .build();
@@ -157,14 +165,24 @@ public class BoardApiController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
                 .body(resource);
     }
-
-    @PutMapping("/{id}")
-    public void updateBoard(@PathVariable long id, @ModelAttribute BoardUpdateRequestDto dto){
+    @Operation(summary = "게시글 수정",
+            description = "경로의 id 게시글을 수정한다. 파일 교체가 가능하도록 multipart/form-data 로 받는다.")
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateBoard(
+            @Parameter(description = "수정할 게시글 id", example = "1")
+            @PathVariable long id,
+            @ModelAttribute BoardUpdateRequestDto dto){
         boardService.updateBoard(id, dto);
     }
 
+
+    @Operation(summary = "게시글 삭제",
+            description = "경로의 id 게시글을 삭제한다. 첨부파일 경로(filePath)를 JSON 본문으로 함께 받아 파일도 정리한다.")
     @DeleteMapping("/{id}")
-    public void deleteBoard(@PathVariable long id, @RequestBody BoardDeleteRequestDto dto) {
+    public void deleteBoard(
+            @Parameter(description = "삭제할 게시글 id", example = "1")
+            @PathVariable long id,
+            @RequestBody BoardDeleteRequestDto dto) {
         boardService.deleteBoard(id, dto);
     }
 }

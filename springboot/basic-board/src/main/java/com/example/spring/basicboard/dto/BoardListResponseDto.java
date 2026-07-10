@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Builder
 public class BoardListResponseDto {
-    private List<Board> boards;
+    private List<BoardListItemResponseDto> boards;
     private boolean last;
     private int totalPages;
 }
