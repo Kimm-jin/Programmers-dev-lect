@@ -63,22 +63,12 @@ O(N)
 상태값
 Map<String, Integer> map
 
+
 [좋았던 점]
-- participant.length가 최대 100,000이라는 조건을 보고,
-  이중 for문으로 직접 비교하면 최악의 경우 O(N^2)이 된다는 점을 인식한 것은 좋았다.
-- 빠른 탐색을 위해 해시 기반 자료구조를 떠올린 방향도 맞았다.
-- 동명이인이 존재하므로 Set은 개수 정보를 보존할 수 없어 부적합하다고 판단한 것도 좋았다.
-- HashMap<String, Integer>를 사용해
-  key = 선수 이름
-  value = 해당 이름의 참가자 수
-  형태로 관리한 방향은 적절했다.
+- N 최대 100,000을 보고 O(N^2) 풀이를 피해야 한다고 판단한 점이 좋았다.
+- 동명이인 때문에 Set이 아닌 HashMap을 사용해 이름별 개수를 관리한 접근이 적절했다.
 
 [보완할 점]
-1. containsKey()는 이 문제에서 필수는 아니다.
-   - completion에 있는 이름은 문제 조건상 반드시 participant에도 존재한다.
-   - 따라서 바로 map.get(name) - 1로 감소시켜도 된다.
-
-2. value < 1이면 바로 return 하는 구조는 흐름이 복잡해질 수 있다.
-   - 모든 completion을 순회하며 value를 감소시킨 뒤,
-   - 마지막에 value가 1인 key를 찾는 방식이 더 단순하고 명확하다.
+- completion의 이름은 항상 participant에 존재하므로 containsKey()는 필요 없다.
+- completion 전체를 순회해 개수를 감소시킨 뒤, 마지막에 value가 1인 key를 찾는 구조가 더 단순하다.
 */
