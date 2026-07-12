@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BoardController {
@@ -19,10 +21,33 @@ public class BoardController {
         return "/board-write";
     }
 
+    @GetMapping("/detail")
+    public String detail(
+            // 변수명을 다르게 쓰고싶다면 id임을 명시해 주어야 한다.
+            @RequestParam("id") Long id,
+            HttpSession session,
+            Model model
+    ){
+        setSession(session, model);
+        model.addAttribute("id",id);
+        return "/board-detail";
+    }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/members/login";
+    }
+
+    @GetMapping("/update/{id}")
+    public String update(
+            @PathVariable long id,
+            HttpSession session,
+            Model model
+    ){
+        setSession(session,model);
+        model.addAttribute("id",id);
+        return "/board-update";
     }
 
     private void setSession(HttpSession session, Model model){

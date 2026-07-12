@@ -2,12 +2,9 @@ package org.example.springboot.report_36_회원가입_로그인.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.springboot.report_36_회원가입_로그인.domain.entity.Board;
-import org.example.springboot.report_36_회원가입_로그인.domain.repository.BoardRepository;
-import org.example.springboot.report_36_회원가입_로그인.dto.BoardDeleteRequestDto;
-import org.example.springboot.report_36_회원가입_로그인.dto.BoardDetailResponseDto;
-import org.example.springboot.report_36_회원가입_로그인.dto.BoardListResponseDto;
-import org.example.springboot.report_36_회원가입_로그인.dto.BoardWriteRequestDto;
+import org.example.springboot.report_36_회원가입_로그인.dto.*;
 import org.example.springboot.report_36_회원가입_로그인.service.BoardService;
+import org.example.springboot.report_36_회원가입_로그인.service.FileService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,6 +20,7 @@ import java.util.List;
 @RequestMapping("/api/boards")
 public class BoardApiController {
     private final BoardService boardService;
+    private final FileService fileService;
 
     @GetMapping
     public BoardListResponseDto getBoardList(
@@ -55,7 +53,7 @@ public class BoardApiController {
 
     @GetMapping("/file/download/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
-        Resource resource = boardService.downloadFile(fileName);
+        Resource resource = fileService.downloadFile(fileName);
 
         String encodedFileName = URLEncoder.encode(resource.getFilename(), StandardCharsets.UTF_8)
                 .replaceAll("\\+", "%20");
@@ -71,8 +69,13 @@ public class BoardApiController {
         boardService.saveArticle(dto.getUserId(), dto.getTitle(), dto.getContent(), dto.getFile());
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteArticle(@PathVariable long id, @RequestBody BoardDeleteRequestDto dto){
         boardService.deleteArticle(id, dto);
+    }
+
+    @PutMapping("/{id}")
+    public void updateBoard(@PathVariable long id, @ModelAttribute BoardUpdateRequestDto dto){
+        boardService.updateArticle(id, dto);
     }
 }

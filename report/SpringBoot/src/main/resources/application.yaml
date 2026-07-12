@@ -3,6 +3,11 @@ weather:
     key: 539326b688980548270d10b24953b698faa91b70fe4f27267c72accf6015ac00
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
   application:
     name: Springboot
 
@@ -14,3 +19,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+file:
+  upload-dir: ./uploads
+
+
