@@ -2,7 +2,6 @@ package com.example.spring.basicboard.controller;
 
 import com.example.spring.basicboard.domain.entity.Board;
 import com.example.spring.basicboard.dto.*;
-import com.example.spring.basicboard.mapper.BoardMapper;
 import com.example.spring.basicboard.service.BoardService;
 import com.example.spring.basicboard.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,7 +40,6 @@ import java.util.List;
 public class BoardApiController {
     private final BoardService boardService;
     private final FileService fileService;
-    private final BoardMapper boardMapper;
 
     @Operation(
             summary = "게시글 목록 조회",
@@ -57,23 +55,22 @@ public class BoardApiController {
         // 게시글 목록
         List<Board> boards = boardService.getBoardList(page, size);
 
-        List<BoardListItemResponseDto> boardItems = boardMapper.toDtoList(boards);
-
         // 전체 게시글 수 가져오기
         int totalBoards = boardService.getTotalBoards();
 
         // 전체 페이지 수 계산
         int totalPages = (int) Math.ceil((double) totalBoards / size);
 
-        // 마지막 페이지 여부
+        // 마지막 페이 여부
         boolean last = page >= totalPages;
 
         return BoardListResponseDto.builder()
-                .boards(boardItems)
+                .boards(boards)
                 .last(last)
                 .totalPages(totalPages)
                 .build();
     }
+
 
     // * Swagger 에서 "파일 업로드(multipart)" 를 제대로 그리게 하는 핵심
     // # 문제: @ModelAttribute + MultipartFile 을 그냥 두면, Swagger 가 이걸 JSON 본문으로 오해하거나
@@ -184,5 +181,22 @@ public class BoardApiController {
             @PathVariable long id,
             @RequestBody BoardDeleteRequestDto dto) {
         boardService.deleteBoard(id, dto);
+    }
+
+
+    // =========== [QueryDSL] =============
+    @Operation(
+            summary = "게시글 검색",
+            description = "제목/작성자/작성기간으로 동적 검색한다. 작성자 이름(member)과 댓글 수(comment)를 함께 내려준다."
+    )
+    @GetMapping("/search")
+    public void searchBoards(
+            @ModelAttribute BoardSearchRequestDto dto,
+            @Parameter( description = "조회할 페이지 번호 (1부터 시작)", example = "1" )
+            @RequestParam(defaultValue = "1") int page,
+            @Parameter( description = "한 페이지에 담을 게시글 수", example = "10" )
+            @RequestParam(defaultValue = "10") int size
+    ){
+
     }
 }
