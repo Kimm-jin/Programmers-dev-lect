@@ -23,4 +23,5 @@ public class CommentResponseDto {
     @Schema(description = "작성 일시", example = "2026-06-01 09:12")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime created;
+
 }

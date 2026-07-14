@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class BoardMapper {
 
-    public BoardWithCommentsResponseDto toBoardWithCommentsResponseDto(Board board){
+    public BoardWithCommentsResponseDto toBoardWithCommentsResponseDto(Board board) {
         List<CommentResponseDto> comments = board.getComments().stream()
                 .map(this::toCommentDto)
                 .toList();
@@ -35,10 +35,11 @@ public class BoardMapper {
          */
     }
 
-    public CommentResponseDto toCommentDto(Comment comment){
+    public CommentResponseDto toCommentDto(Comment comment) {
         return CommentResponseDto.builder()
                 .id(comment.getId())
                 .userId(comment.getUserId())
+                .content(comment.getContent())
                 .created(comment.getCreated())
                 .build();
     }

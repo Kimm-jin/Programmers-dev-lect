@@ -10,7 +10,7 @@ import java.util.Optional;
 
 // * "직접 짠 쿼리(QueryDSL)"를 위한 커스텀 레포지토리 인터페이스
 // - BoardRepository는 Spring Data가 구현체를 자동으로 생성해주는 인터페이스여서, 우리가 직접 코드를 못 넣는다.
-// - 그래서 "직접 구현할 메서드"는 이 별도 인터페이스에 선언하고, 실제 코드는 BoardRepositoryImpl에 짠다.
+// - 그래서 "직접 구현할 메서드"는  이 별도 인터페이스에 선언하고, 실제 코드는 BoardRepositoryImpl에 짠다.
 // - 그리고 BoardRepository가 이 인터페이스를 함께 상속하면(extends)
 // Spring Data가 "자동 생성 메서드 + 우리가 짠 메서드"를 하나의 레포지토리로 합쳐준다.
 
@@ -22,5 +22,4 @@ public interface BoardRepositoryCustom {
     Page<BoardListItemResponseDto> searchBoards(BoardSearchRequestDto condition, Pageable pageable);
 
     Optional<Board> findWithComments(Long id);
-
 }
