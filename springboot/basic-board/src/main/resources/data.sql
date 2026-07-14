@@ -22,6 +22,7 @@ CREATE TABLE board (
     created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+
 -- comment 테이블 생성
 -- board_id 는 board.id 를 가리키는 외래키(FK) - "이 댓글이 어느 게시글 것인지"를 나타낸다
 CREATE TABLE comment (
