@@ -7,11 +7,24 @@ import com.example.spring.basicboard.dto.MemberJoinRequestDto;
 import com.example.spring.basicboard.exception.DuplicateUserIdException;
 import com.example.spring.basicboard.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+// * @Slf4j 로 서비스 레벨 로깅하기(lombok)
+// lombok을 안쓰면 ...
+// private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemberService.class);
+
+// 로그 레벨 5단계 - "이 메시지가 얼마나 중요한가"의 등급
+// trace < debug < info < warn < error
+// - trace/debug : 개발 중 흐름 추적용 (운영 기본 설정에선 안 찍힘)
+// - info : 의미 있는 비지니스 이벤트(가입 완료, 글 등록 등 "정상인데 기록할 가치가 있는 일")
+// - warn : 이상하지만 서비스는 계속되는 상황(로그인 실패, 중복 가입 시도 등)
+// - error : 예상 못한 실패 (500 계열)
+
+@Slf4j
 @Service
 // 이 클래스의 "모든 메서드"에 기본 적용된다.
 // - readOnly = true의 효과
