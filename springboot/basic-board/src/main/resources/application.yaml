@@ -36,7 +36,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true # 출력되는 SQL을 보기좋게 출력
@@ -53,7 +53,7 @@ logging:
     com.example.spring.basicboard: debug
     # show-sql: true -> SQL을 "System.out"으로 찍는다.
     # 레벨제어도, 파일 저장도 안 된다.
-    org.hibernate.sql: debug # 실행되는 SQL문장을 로거로 출력
+    org.hibernate.SQL: debug # 실행되는 SQL문장을 로거로 출력
     org.hibernate.orm.jdbc.bind: trace # SQL의 ? 자리에 바인딩되는 실제 값까지 출력
   charset:
     console: UTF-8
