@@ -55,10 +55,13 @@ public class MemberService {
     public void join(MemberJoinRequestDto dto) {
         // 아이디 중복체크
         if ( memberRepository.existsByUserId(dto.getUserId()) ) {
+            // 실패지만 "예상 범위 안의" 실패다
+            log.warn("회원가입 실패(아이디 중복) : userId={}",dto.getUserId());
             // 예외 공통화
             throw new DuplicateUserIdException("[회원가입] 이미 존재하는 아이디입니다.");
         }
         memberRepository.save( memberMapper.toEntity(dto) );
+        log.info("회원가입 완료 : userId={}, userName={}",dto.getUserId(), dto.getUserName());
     }
 
     // * Optional<Member> : NPE(NullPointerException) 예방
@@ -116,6 +119,16 @@ public class MemberService {
         //     return Optional.empty();          // 실패: 빈 Optional 반환
         //
         //   => 위 if 분기(널 체크 + 비밀번호 비교)를 .filter(람다) 한 줄로 압축한 것이 아래 코드다
+        Optional<Member> result = memberRepository.findByUserId(dto.getUsername())
+                .filter(
+                        member -> member.getPassword().equals(dto.getPassword())
+                );
+        if( result.isEmpty() ){
+            log.warn("로그인 실패 : userName{}", dto.getUsername());
+        } else {
+            log.info("로그인 성공 : userName={}", dto.getUsername());
+        }
+
         return memberRepository.findByUserId(dto.getUsername())
                 .filter(
                      member -> member.getPassword().equals(dto.getPassword())
