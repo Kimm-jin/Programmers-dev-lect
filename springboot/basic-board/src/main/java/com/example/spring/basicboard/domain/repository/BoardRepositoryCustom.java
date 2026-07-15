@@ -1,11 +1,13 @@
 package com.example.spring.basicboard.domain.repository;
 
 import com.example.spring.basicboard.domain.entity.Board;
+import com.example.spring.basicboard.dto.BoardAuthorStatsResponseDto;
 import com.example.spring.basicboard.dto.BoardListItemResponseDto;
 import com.example.spring.basicboard.dto.BoardSearchRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 // * "직접 짠 쿼리(QueryDSL)"를 위한 커스텀 레포지토리 인터페이스
@@ -22,4 +24,6 @@ public interface BoardRepositoryCustom {
     Page<BoardListItemResponseDto> searchBoards(BoardSearchRequestDto condition, Pageable pageable);
 
     Optional<Board> findWithComments(Long id);
+
+    List<BoardAuthorStatsResponseDto> countBoardsByAuthor(long minCount);
 }

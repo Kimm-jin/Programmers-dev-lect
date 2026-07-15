@@ -125,8 +125,13 @@ let renderComments = (comments) => {
 //   - 작성자(userId)는 입력받지 않고 로그인 세션 값(hiddenUserId)을 쓴다
 //   - 성공하면 입력칸을 비우고 상세를 다시 불러 댓글 목록(과 목록 화면의 댓글 수 집계 대상)을 갱신한다
 let submitComment = () => {
+    // HTML hidden input에서 현재 게시글 번호 가져오기
     let hId = $('#hiddenId').val();
+
+    // HTML hidden input에서 현재 사용자 ID 가져오기
     let hUserId = $('#hiddenUserId').val();
+
+    // 댓글 입력창에서 사용자가 입력한 내용 가져오기
     let content = $('#commentContent').val();
 
     // 빈 댓글 방지 - trim 으로 공백만 친 경우도 걸러낸다
@@ -137,8 +142,12 @@ let submitComment = () => {
 
     $.ajax({
         type: 'POST',
+        // 게시글 번호를 URL 경로에 포함
+        // 예: /api/boards/15/comments
         url: '/api/boards/' + hId + '/comments',
+        // 서버에 보내는 요청 본문의 형식이 JSON임을 알림
         contentType: 'application/json',                              // JSON 본문 (@RequestBody 로 받는다)
+        // JS 객체를 JSON 문자열로 변환해서 HTTP 요청 body에 넣음
         data: JSON.stringify({ userId: hUserId, content: content }),  // CommentWriteRequestDto 필드와 키가 같아야 한다
         success: () => {
             $('#commentContent').val('');   // 입력칸 비우기

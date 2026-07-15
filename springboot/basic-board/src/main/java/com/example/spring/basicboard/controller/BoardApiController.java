@@ -37,7 +37,7 @@ import java.util.List;
 // - springdoc 은 @ResponseBody(= @RestController) 핸들러만 문서화 대상으로 삼기 때문이다.
 // -(BoardController/MemberController 는 "board-list" 같은 뷰 이름을 반환하므로 애초에 제외된다)
 
-@Tag( name = "게시글 API", description = "게시글 목록/상세 조회, 작성, 수정, 삭제, 첨부파일 다운로드" )
+@Tag(name = "게시글 API", description = "게시글 목록/상세 조회, 작성, 수정, 삭제, 첨부파일 다운로드")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/boards")
@@ -52,9 +52,9 @@ public class BoardApiController {
     )
     @GetMapping
     public BoardListResponseDto getBoardList(
-            @Parameter( description = "조회할 페이지 번호 (1부터 시작)", example = "1" )
+            @Parameter(description = "조회할 페이지 번호 (1부터 시작)", example = "1")
             @RequestParam(defaultValue = "1") int page,
-            @Parameter( description = "한 페이지에 담을 게시글 수", example = "10" )
+            @Parameter(description = "한 페이지에 담을 게시글 수", example = "10")
             @RequestParam(defaultValue = "10") int size
     ) {
         // 게시글 목록
@@ -88,7 +88,7 @@ public class BoardApiController {
     //       -> 그래야 그 칸이 "파일 선택" 버튼으로 렌더링된다 (BoardWriteRequestDto 참고)
     @Operation(summary = "게시글 작성",
             description = "제목/내용/작성자와 (선택적) 첨부파일을 multipart/form-data 로 받아 새 게시글을 저장한다.")
-    @PostMapping( consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void saveBoard(@ModelAttribute BoardWriteRequestDto dto) {
         boardService.saveBoard(dto.getUserId(), dto.getTitle(), dto.getContent(), dto.getFile());
     }
@@ -167,13 +167,14 @@ public class BoardApiController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName)
                 .body(resource);
     }
+
     @Operation(summary = "게시글 수정",
             description = "경로의 id 게시글을 수정한다. 파일 교체가 가능하도록 multipart/form-data 로 받는다.")
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void updateBoard(
             @Parameter(description = "수정할 게시글 id", example = "1")
             @PathVariable long id,
-            @ModelAttribute BoardUpdateRequestDto dto){
+            @ModelAttribute BoardUpdateRequestDto dto) {
         boardService.updateBoard(id, dto);
     }
 
@@ -203,9 +204,9 @@ public class BoardApiController {
     @GetMapping("/search")
     public Page<BoardListItemResponseDto> searchBoards(
             @ModelAttribute BoardSearchRequestDto dto,
-            @Parameter( description = "조회할 페이지 번호 (1부터 시작)", example = "1" )
+            @Parameter(description = "조회할 페이지 번호 (1부터 시작)", example = "1")
             @RequestParam(defaultValue = "1") int page,
-            @Parameter( description = "한 페이지에 담을 게시글 수", example = "10" )
+            @Parameter(description = "한 페이지에 담을 게시글 수", example = "10")
             @RequestParam(defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page - 1, size);
@@ -228,6 +229,15 @@ public class BoardApiController {
         return boardMapper.toBoardWithCommentsResponseDto(board);
     }
 
+    @Operation(summary = "작성자별 게시글 수 통계",
+            description = "작성자별로 게시글 수를 집계하고(group by), minCount 편 이상 쓴 작성자만(having) 많이 쓴 순으로 내려준다.")
+    @GetMapping("/stats/authors")
+    public List<BoardAuthorStatsResponseDto> getAuthors(
+            @Parameter(description = "최소 게시글 수 (이 값 이상 쓴 작성자만)", example = "1")
+            @RequestParam(defaultValue = "1") long minCount
+    ) {
+        return boardService.getAuthorStats( minCount );
+    }
 
 
 }
