@@ -70,9 +70,9 @@ public class LogginAspect {
         }
 
         // === 대상 메서드 실행 "전" 로깅 ===
-        System.out.println("[요청 시작] " + httpInfo + " -> " + method);
+        log.info("[요청 시작] {} -> {}" , httpInfo, method);
 
-        System.out.println("[파라미터] " + Arrays.toString(joinPoint.getArgs()) );
+        log.info("[파라미터] {}", Arrays.toString(joinPoint.getArgs()) );
 
         long start = System.currentTimeMillis();
 
@@ -82,13 +82,13 @@ public class LogginAspect {
 
             // === 대상 메서드가 "정상 종료"된 후 로깅 ===
             long end = System.currentTimeMillis() - start; // 걸린시간
-            System.out.println("[요청 완료] " + method + " : " + end + "ms");
+            log.info("[요청 완료] {} : {}ms",method, end);
 
             return result;
         } catch ( Throwable e ) {
             // === 대상 메서드가 "예외를 던졌을 때" 로깅 ===
             long end = System.currentTimeMillis() - start; // 걸린시간
-            System.out.println("[요청 실패] " + method + " : " + end + "ms" + " : 예외메시지 " + e.getMessage());
+            log.warn("[요청 실패] {} : {}ms : 예외메세지 {}", method, end, e.getMessage());
 
             // 잡은 예외를 다시 던진다.
             // - 여기서 예외를 삼켜버리면 컨트롤러는 정상 처리된 것처럼 보여 버그가 된다.

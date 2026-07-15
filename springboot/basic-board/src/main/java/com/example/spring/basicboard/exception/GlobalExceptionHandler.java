@@ -1,6 +1,7 @@
 package com.example.spring.basicboard.exception;
 
 import com.example.spring.basicboard.dto.ErrorResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,7 +46,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 //   - 로깅/실행시간 측정/트랜잭션 처럼 "무엇에나 끼워 넣는 범용 작업"       -> AOP (@Aspect)  [LoggingAspect 참고]
 //   - 예외를 적절한 HTTP 응답으로 바꾸는 "웹 특화 작업"                     -> @RestControllerAdvice (이 클래스)
 //   (억지로 AOP 로 예외 처리도 되긴 하지만, 위 (1)(2) 를 전부 직접 만들어야 해서 손해다)
-
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -58,6 +59,7 @@ public class GlobalExceptionHandler {
     // 에러 상황에서는 상태 코드를 4XX/5XX등으로 바꿔야 하므로 ResponseEntity로 감싼다.
     @ExceptionHandler(DuplicateUserIdException.class)
     public ResponseEntity<ErrorResponseDto> duplicateUserIdException(DuplicateUserIdException e) {
+        log.warn("409 응답 : {}",e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(
@@ -67,6 +69,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BoardNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> boardNotFoundException(BoardNotFoundException e){
+        log.warn("404 응답 : {}", e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(
@@ -77,6 +80,7 @@ public class GlobalExceptionHandler {
     // * 최후의 보루 핸들러 : 위에서 처리하지 못한 "모든 예외"를 잡는다.
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto> exception(Exception e) {
+        log.error("500 응답(예상치 못한 예외 발생)", e);
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(
