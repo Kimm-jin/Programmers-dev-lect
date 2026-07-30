@@ -39,6 +39,8 @@ public class TokenApiController {
                     (int) jwtProperties.getRefreshTokenValidity().toSeconds()
             );
 
+            refreshTokenResponseDto.setRefreshToken(null);
+
             return ResponseEntity.ok(refreshTokenResponseDto);
         }
 
