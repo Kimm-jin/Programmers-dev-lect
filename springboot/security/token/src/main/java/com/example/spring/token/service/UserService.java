@@ -1,6 +1,5 @@
 package com.example.spring.token.service;
 
-import com.example.spring.token.config.jwt.TokenProvider;
 import com.example.spring.token.config.security.CustomUserDetails;
 import com.example.spring.token.domain.entity.User;
 import com.example.spring.token.domain.repository.UserRepository;
@@ -18,18 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional( readOnly = true )
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final TokenProvider tokenProvider;
     private final TokenService tokenService;
 
     public void signUp(SignUpRequestDto requestDto) {
 
-        if (userRepository.existsByUserId(requestDto.getUserId())) {
+        if ( userRepository.existsByUserId(requestDto.getUserId()) ) {
             throw new DuplicateUserIdException("[회원가입] 이미 사용중인 아이디입니다.");
         }
 
@@ -60,5 +58,6 @@ public class UserService {
                 .userId(user.getUserId())
                 .build();
     }
+
 
 }
