@@ -13,5 +13,16 @@ package org.example.oauth2.config;
 // 3) Authorization Server : 허락(인가)을 발급하는 서버 = kauth.kakao.com
 // 4) Resource Server : 실제 자원(프로필 등)을 보관한 서버 = kapi.kakao.com
 
+// 인가 코드 방식 - 표준 흐름
+// 1) Client가 사용자를 Authorization Server의 인가 페이지로 리다이렉트
+// (client_id, redirect_uri, scope, state를 쿼리로 실어 보낸다.)
+// 2) 사용자가 "카카오 화면에서" 로그인하고 권한 제공에 동의
+// 3) Authorization Server가 redirect_uri로 "인가 코드"를 돌려준다 (브라우저 공유)
+// 4) Client 서버가 code + client_secret으로 토큰 엔드포인트에 직접 요청(브라우저 안 거침)
+// 5) Authorization Server가 access token 발급
+// 6) Client가 그 토큰으로 Resource Server에서 사용자 정보 조회
+
+// Spring Security에서의 동작 흐름 - oauth2Login()
+
 public class SecurityConfig {
 }
