@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/",
+                                "/admin",
                                 "/users/login",
                                 "/users/join",
                                 "/access-denied",
