@@ -37,7 +37,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         if (token != null) {
             TokenStatus status = tokenProvider.validateToken(token);
 
-            if (status == TokenStatus.VALID) {
+            if (status == TokenStatus.VALID
+                    && tokenProvider.isAccessToken(token)) {
                 Member member = tokenProvider.getTokenDetails(token);
 
                 Authentication authentication =
@@ -46,10 +47,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext()
                         .setAuthentication(authentication);
 
-            } else if (status == TokenStatus.EXPIRED) {
-                log.warn("{}, token is expired", requestURI);
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+            } else {
+                SecurityContextHolder.clearContext();
+                log.warn("{}, access token authentication failed: {}", requestURI, status);
             }
         }
 

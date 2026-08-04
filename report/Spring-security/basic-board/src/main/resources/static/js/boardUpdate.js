@@ -17,17 +17,12 @@ let updated = () => {
         const hId = $('#hiddenId').val();
         const formData = new FormData($('#writeForm')[0]);
 
-        $.ajax({
+        authAjax({
             type: 'PUT',
             url: '/api/boards/' + hId,
             data: formData,
             processData: false,
             contentType: false,
-
-            headers: {
-                Authorization:
-                    `Bearer ${localStorage.getItem('accessToken')}`
-            },
 
             success: function () {
                 alert('게시글이 성공적으로 수정되었습니다.');
@@ -85,29 +80,12 @@ let updateFileList = () => {
     });
 };
 
-// Access Token 존재 여부 확인
-let checkToken = () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-        window.location.href = '/members/login';
-        return false;
-    }
-
-    return true;
-};
-
 let loadBoardDetail = () => {
     const hId = $('#hiddenId').val();
 
-    $.ajax({
+    authAjax({
         type: 'GET',
         url: '/api/boards/' + hId,
-
-        headers: {
-            Authorization:
-                `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         success: (response) => {
             $('#title').val(response.title);
@@ -160,23 +138,3 @@ let renderExistingFile = (filePath) => {
 };
 
 
-let handleRequestError = (error, defaultMessage) => {
-    console.error('요청 오류:', error);
-
-    if (error.status === 401) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-
-        alert('로그인이 필요하거나 토큰이 만료되었습니다.');
-        window.location.href = '/members/login';
-        return;
-    }
-
-    if (error.status === 403) {
-        alert('게시글을 수정할 권한이 없습니다.');
-        window.location.href = '/';
-        return;
-    }
-
-    alert(defaultMessage);
-};

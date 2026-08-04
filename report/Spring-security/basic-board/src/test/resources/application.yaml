@@ -22,3 +22,9 @@ spring:
 # 이 파일이 메인 application.yaml을 대체하므로, 여기에 없으면 전체 컨텍스트 로딩 시 주입 실패로 뜬다.
 file:
   upload-dir: ./build/test-uploads
+
+jwt:
+  issuer: basic-board-test
+  secret-key: 4ukvJcQYxNY1X/9Ep4VsnXWhjkV/QzN/plJa24NcOf1pnLB+78OKrBG4LyAVGOHzzdo5sorkBA73Yo0/4urXIg==
+  access-token-validity: 10m
+  refresh-token-validity: 1h

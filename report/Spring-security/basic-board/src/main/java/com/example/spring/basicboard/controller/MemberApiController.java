@@ -1,7 +1,6 @@
 package com.example.spring.basicboard.controller;
 
 import com.example.spring.basicboard.config.security.CustomUserDetails;
-import com.example.spring.basicboard.constant.SessionConst;
 import com.example.spring.basicboard.dto.*;
 import com.example.spring.basicboard.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,12 +9,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-@Tag( name = "회원 API", description = "회원가입, 로그인, 로그아웃 (세션 기반, spring security 미사용)")
+@Tag(name = "회원 API", description = "회원가입 및 JWT 인증 회원 정보 조회")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/members")

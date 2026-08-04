@@ -18,8 +18,7 @@ $(document).ready(() => {
             dataType: 'json',
 
             success: (response) => {
-                localStorage.setItem('accessToken', response.accessToken);
-                localStorage.setItem('refreshToken', response.refreshToken);
+                saveTokens(response.accessToken, response.refreshToken);
 
                 alert('로그인에 성공했습니다.');
 

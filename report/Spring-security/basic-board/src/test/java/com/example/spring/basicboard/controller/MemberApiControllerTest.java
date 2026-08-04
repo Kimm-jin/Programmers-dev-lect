@@ -1,6 +1,7 @@
 package com.example.spring.basicboard.controller;
 
 import com.example.spring.basicboard.exception.DuplicateUserIdException;
+import com.example.spring.basicboard.config.jwt.TokenProvider;
 import com.example.spring.basicboard.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,9 @@ class MemberApiControllerTest {
 
     @MockitoBean
     private MemberService memberService;
+
+    @MockitoBean
+    private TokenProvider tokenProvider;
 
     @Test
     @DisplayName("회원가입 성공 - 200과 이동할 url을 반환한다.")
@@ -98,7 +102,7 @@ class MemberApiControllerTest {
 
         // when & then
         mockMvc.perform(
-                        post("api/members/join")
+                        post("/api/members/join")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(requestJson)
                 )

@@ -28,25 +28,10 @@ $(document).ready(() => {
 
 const PAGE_SIZE = 10;
 
-let checkToken = () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-        window.location.href = '/members/login';
-        return false;
-    }
-
-    return true;
-};
-
 let loadMemberInfo = () => {
-    $.ajax({
+    authAjax({
         type: 'GET',
         url: '/api/members/info',
-
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         success: (member) => {
             $('#loginUserName').text(member.userName);
@@ -89,13 +74,9 @@ let getSearchCondition = () => {
 };
 
 let loadBoard = (page) => {
-    $.ajax({
+    authAjax({
         type: 'GET',
         url: '/api/boards/search',
-
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         data: {
             page: page,
@@ -186,30 +167,3 @@ let renderPagination = (currentPage, totalPages) => {
     }
 };
 
-let logout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-
-    alert('로그아웃되었습니다.');
-    window.location.href = '/members/login';
-};
-
-let handleRequestError = (error, defaultMessage) => {
-    console.error('요청 오류:', error);
-
-    if (error.status === 401) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-
-        alert('로그인이 필요하거나 토큰이 만료되었습니다.');
-        window.location.href = '/members/login';
-        return;
-    }
-
-    if (error.status === 403) {
-        alert('접근 권한이 없습니다.');
-        return;
-    }
-
-    alert(defaultMessage);
-};

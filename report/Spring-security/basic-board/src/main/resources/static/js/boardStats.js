@@ -14,17 +14,6 @@ $(document).ready(() => {
     });
 });
 
-let checkToken = () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-        window.location.href = '/members/login';
-        return false;
-    }
-
-    return true;
-};
-
 // 통계 데이터를 로드하는 함수 - minCount 는 서버 쿼리의 having 조건이 된다
 let loadStats = () => {
     // 입력값이 비었거나 1 미만이면 1로 보정한다 (음수/0 을 보내는 실수 방지)
@@ -34,12 +23,9 @@ let loadStats = () => {
         $('#minCount').val(1);
     }
 
-    $.ajax({
+    authAjax({
         type: 'GET',
         url: '/api/boards/stats/authors',
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
         data: {
             minCount: minCount
         },
@@ -48,8 +34,10 @@ let loadStats = () => {
             renderStats(response);
         },
         error: (error) => {
-            console.error('오류 발생:', error);
-            alert('통계 데이터를 불러오는데 오류가 발생했습니다.');
+            handleRequestError(
+                error,
+                '통계 데이터를 불러오는데 오류가 발생했습니다.'
+            );
         }
     });
 }
@@ -93,10 +81,3 @@ let renderStats = (stats) => {
     });
 }
 
-let logout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-
-    alert('로그아웃되었습니다.');
-    window.location.href = '/members/login';
-};

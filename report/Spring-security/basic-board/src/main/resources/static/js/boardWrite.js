@@ -16,16 +16,12 @@ let saved = () => {
 
         let formData = new FormData($('#writeForm')[0]);
 
-        $.ajax({
+        authAjax({
             type: 'POST',
             url: '/api/boards',
             data: formData,
             processData: false,
             contentType: false,
-
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            },
 
             success: function(response) {
                 alert('게시글이 성공적으로 등록되었습니다!');
@@ -33,18 +29,10 @@ let saved = () => {
             },
 
             error: function(error) {
-                console.error('오류 발생:', error);
-
-                if (error.status === 401) {
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('refreshToken');
-
-                    alert('로그인이 필요합니다.');
-                    window.location.href = '/members/login';
-                    return;
-                }
-
-                alert('게시글 등록 중 오류가 발생하였습니다.');
+                handleRequestError(
+                    error,
+                    '게시글 등록 중 오류가 발생하였습니다.'
+                );
             }
         });
 
@@ -81,41 +69,17 @@ let updateFileList = () => {
     }
 }
 
-let checkToken = () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-        window.location.href = '/members/login';
-        return false;
-    }
-
-    return true;
-};
-
 let loadMemberInfo = () => {
-    $.ajax({
+    authAjax({
         type: 'GET',
         url: '/api/members/info',
-
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         success: (member) => {
             $('#userName').val(member.userName);
         },
 
         error: (error) => {
-            console.error('사용자 정보 조회 실패:', error);
-
-            if (error.status === 401) {
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                window.location.href = '/members/login';
-                return;
-            }
-
-            alert('작성자 정보를 불러오지 못했습니다.');
+            handleRequestError(error, '작성자 정보를 불러오지 못했습니다.');
         }
     });
 };

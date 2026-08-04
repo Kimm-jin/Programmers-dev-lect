@@ -88,6 +88,16 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(InvalidRefreshTokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponseDto handleInvalidRefreshToken(InvalidRefreshTokenException e) {
+        log.warn("401 응답 : {}", e.getMessage());
+        return new ErrorResponseDto(
+                HttpStatus.UNAUTHORIZED.value(),
+                e.getMessage()
+        );
+    }
+
     // * 최후의 보루 핸들러 : 위에서 처리하지 못한 "모든 예외"를 잡는다.
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto> exception(Exception e) {

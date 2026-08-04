@@ -28,6 +28,7 @@ public class TokenProvider {
     private static final String CLAIM_ID = "id";
     private static final String CLAIM_NAME = "name";
     private static final String CLAIM_ROLE = "role";
+    private static final String CLAIM_TOKEN_TYPE = "tokenType";
 
     private final JwtProperties jwtProperties;
 
@@ -46,19 +47,40 @@ public class TokenProvider {
                 .build();
     }
 
-    public String generateToken(Member member, Duration validity) {
+    public String generateAccessToken(Member member) {
+        return generateToken(
+                member,
+                jwtProperties.getAccessTokenValidity(),
+                TokenType.ACCESS
+        );
+    }
+
+    public String generateRefreshToken(Member member) {
+        return generateToken(
+                member,
+                jwtProperties.getRefreshTokenValidity(),
+                TokenType.REFRESH
+        );
+    }
+
+    private String generateToken(
+            Member member,
+            Duration validity,
+            TokenType tokenType
+    ) {
         Date now = new Date();
         Date expiration = new Date(
                 now.getTime() + validity.toMillis()
         );
 
-        return makeToken(member, now, expiration);
+        return makeToken(member, now, expiration, tokenType);
     }
 
     private String makeToken(
             Member member,
             Date issuedAt,
-            Date expiration
+            Date expiration,
+            TokenType tokenType
     ) {
         return Jwts.builder()
                 .header()
@@ -71,6 +93,7 @@ public class TokenProvider {
                 .claim(CLAIM_ID, member.getId())
                 .claim(CLAIM_NAME, member.getUserName())
                 .claim(CLAIM_ROLE, member.getRole().name())
+                .claim(CLAIM_TOKEN_TYPE, tokenType.name())
                 .signWith(secretKey, Jwts.SIG.HS512)
                 .compact();
     }
@@ -90,6 +113,18 @@ public class TokenProvider {
             log.warn("유효하지 않은 토큰입니다.", e);
             return TokenStatus.INVALID;
         }
+    }
+
+    public boolean isRefreshToken(String token) {
+        return TokenType.REFRESH.name().equals(
+                getClaims(token).get(CLAIM_TOKEN_TYPE, String.class)
+        );
+    }
+
+    public boolean isAccessToken(String token) {
+        return TokenType.ACCESS.name().equals(
+                getClaims(token).get(CLAIM_TOKEN_TYPE, String.class)
+        );
     }
 
     public Member getTokenDetails(String token) {

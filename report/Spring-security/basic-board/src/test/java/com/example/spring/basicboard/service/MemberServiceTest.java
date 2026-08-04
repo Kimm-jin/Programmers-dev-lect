@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -75,6 +76,9 @@ class MemberServiceTest {
     @Mock
     private MemberMapper memberMapper; // 가짜 매퍼
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private MemberService memberService; // 테스트 대상 (위 두 Mock이 주입됨)
 
@@ -88,6 +92,7 @@ class MemberServiceTest {
                 .userName("홍길동")
                 .build();
         given( memberRepository.findByUserId("test") ).willReturn( Optional.of(member) );
+        given(passwordEncoder.matches("1234", "1234")).willReturn(true);
 
         LoginRequestDto requestDto = new LoginRequestDto();
         requestDto.setUsername("test");
@@ -111,6 +116,7 @@ class MemberServiceTest {
                 .userName("홍길동")
                 .build();
         given( memberRepository.findByUserId("test") ).willReturn( Optional.of(member) );
+        given(passwordEncoder.matches("9999", "1234")).willReturn(false);
 
         LoginRequestDto requestDto = new LoginRequestDto();
         requestDto.setUsername("test");
@@ -155,7 +161,8 @@ class MemberServiceTest {
                 .userName("홍길동")
                 .build();
         given( memberRepository.existsByUserId("test") ).willReturn( false );
-        given( memberMapper.toEntity(requestDto) ).willReturn( member );
+        given(passwordEncoder.encode("1234")).willReturn("encoded-1234");
+        given(memberMapper.toEntity(requestDto, "encoded-1234")).willReturn(member);
 
         // when
         memberService.join(requestDto);

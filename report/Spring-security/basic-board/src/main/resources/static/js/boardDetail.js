@@ -15,13 +15,9 @@ let deleteArticle = () => {
     const resourceId = $('#hiddenId').val();
     const filePath = $('#hiddenFilePath').val();
 
-    $.ajax({
+    authAjax({
         type: 'DELETE',
         url: '/api/boards/' + resourceId,
-
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         data: JSON.stringify({
             filePath: filePath
@@ -43,27 +39,12 @@ let deleteArticle = () => {
     });
 };
 
-let checkToken = () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
-        window.location.href = '/members/login';
-        return false;
-    }
-
-    return true;
-};
-
 let loadBoardDetail = () => {
     const boardId = $('#hiddenId').val();
 
-    $.ajax({
+    authAjax({
         type: 'GET',
         url: '/api/boards/' + boardId + '/with-comments',
-
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         success: (response) => {
             $('#title').text(response.title);
@@ -161,13 +142,9 @@ let submitComment = () => {
         return;
     }
 
-    $.ajax({
+    authAjax({
         type: 'POST',
         url: '/api/boards/' + boardId + '/comments',
-
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         contentType: 'application/json',
 
@@ -190,13 +167,9 @@ let submitComment = () => {
 };
 
 let checkBoardOwner = (boardWriterId) => {
-    $.ajax({
+    authAjax({
         type: 'GET',
         url: '/api/members/info',
-
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        },
 
         success: (member) => {
             if (member.userId === boardWriterId) {
@@ -218,22 +191,3 @@ let checkBoardOwner = (boardWriterId) => {
     });
 };
 
-let handleRequestError = (error, defaultMessage) => {
-    console.error('요청 오류:', error);
-
-    if (error.status === 401) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-
-        alert('로그인이 필요하거나 토큰이 만료되었습니다.');
-        window.location.href = '/members/login';
-        return;
-    }
-
-    if (error.status === 403) {
-        alert('요청을 수행할 권한이 없습니다.');
-        return;
-    }
-
-    alert(defaultMessage);
-};

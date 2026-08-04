@@ -2,7 +2,6 @@ package com.example.spring.basicboard.config;
 
 import com.example.spring.basicboard.config.filter.LoginFilter;
 import com.example.spring.basicboard.config.filter.TokenAuthenticationFilter;
-import com.example.spring.basicboard.config.jwt.JwtProperties;
 import com.example.spring.basicboard.config.jwt.TokenProvider;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
@@ -27,7 +26,6 @@ public class SecurityConfig {
 
     private final TokenAuthenticationFilter tokenAuthenticationFilter;
     private final TokenProvider tokenProvider;
-    private final JwtProperties jwtProperties;
     private final ObjectMapper objectMapper;
 
     @Bean
@@ -39,7 +37,6 @@ public class SecurityConfig {
         LoginFilter loginFilter = new LoginFilter(
                 authenticationManager,
                 tokenProvider,
-                jwtProperties,
                 objectMapper
         );
 

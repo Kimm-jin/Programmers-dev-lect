@@ -1,12 +1,15 @@
 package com.example.spring.basicboard.domain.repository;
 
 import com.example.spring.basicboard.domain.entity.Member;
+import com.example.spring.basicboard.config.QueryDslConfig;
+import com.example.spring.basicboard.constant.MemberRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.context.annotation.Import;
 
 import java.util.Optional;
 
@@ -18,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 // - 각 테스트는 트랜잭션 안에서 돌고 "끝나면 자동 롤백"된다 -> 테스트끼리 데이터가 안 섞인다.
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(QueryDslConfig.class)
 class MemberRepositoryTest {
 
     @Autowired
@@ -29,6 +33,7 @@ class MemberRepositoryTest {
                 .userId("test")
                 .password("1234")
                 .userName("홍길동")
+                .role(MemberRole.USER)
                 .build();
 
         memberRepository.save(member);

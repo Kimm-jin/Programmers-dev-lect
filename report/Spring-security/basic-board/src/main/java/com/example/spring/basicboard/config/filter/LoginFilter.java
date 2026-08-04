@@ -1,6 +1,5 @@
 package com.example.spring.basicboard.config.filter;
 
-import com.example.spring.basicboard.config.jwt.JwtProperties;
 import com.example.spring.basicboard.config.jwt.TokenProvider;
 import com.example.spring.basicboard.config.security.CustomUserDetails;
 import com.example.spring.basicboard.dto.LoginRequestDto;
@@ -25,7 +24,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
-    private final JwtProperties jwtProperties;
     private final ObjectMapper objectMapper;
 
     @Override
@@ -68,14 +66,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails userDetails =
                 (CustomUserDetails) authentication.getPrincipal();
 
-        String accessToken = tokenProvider.generateToken(
-                userDetails.getMember(),
-                jwtProperties.getAccessTokenValidity()
+        String accessToken = tokenProvider.generateAccessToken(
+                userDetails.getMember()
         );
 
-        String refreshToken = tokenProvider.generateToken(
-                userDetails.getMember(),
-                jwtProperties.getRefreshTokenValidity()
+        String refreshToken = tokenProvider.generateRefreshToken(
+                userDetails.getMember()
         );
 
         response.setStatus(HttpServletResponse.SC_OK);
