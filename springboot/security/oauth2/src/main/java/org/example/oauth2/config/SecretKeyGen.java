@@ -1,4 +1,4 @@
-package com.example.spring.token.util;
+package org.example.oauth2.config;
 
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -16,4 +16,3 @@ public class SecretKeyGen {
     }
 
 }
-//
