@@ -1,6 +1,5 @@
 package com.example.spring.basicboard.service;
 
-import com.example.spring.basicboard.exception.BoardNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
