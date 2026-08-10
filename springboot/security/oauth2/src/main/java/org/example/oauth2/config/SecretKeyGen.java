@@ -8,6 +8,7 @@ public class SecretKeyGen {
     private static final int KEY_LENGTH_BYTES = 64;
 
     static void main(String[] args) {
+
         byte[] bytes = new byte[KEY_LENGTH_BYTES];
 
         new SecureRandom().nextBytes(bytes);
